@@ -1639,7 +1639,7 @@ rule("Bot Behaviour")
 	{
 		Wait(0.250, Ignore Condition);
 		Set Status(Event Player, Null, Unkillable, 9999);
-		If(!Event Player.TEMP, 5);
+		If(!Event Player.TEMP);
 			Event Player.ICON_NUMBER = 11;
 			Wait(0.250, Ignore Condition);
 			Event Player.TEMP = True;
