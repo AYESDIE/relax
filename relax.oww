@@ -2026,7 +2026,7 @@ rule("Icon 01")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Arrow: Down, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Arrow: Down)));
 	}
 }
 
@@ -2049,7 +2049,7 @@ rule("Icon 02")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Arrow: Left, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Arrow: Left)));
 	}
 }
 
@@ -2072,7 +2072,7 @@ rule("Icon 03")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Arrow: Right, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Arrow: Right)));
 	}
 }
 
@@ -2095,7 +2095,7 @@ rule("Icon 04")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Arrow: Up, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Arrow: Up)));
 	}
 }
 
@@ -2118,7 +2118,7 @@ rule("Icon 05")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Asterisk, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Asterisk)));
 	}
 }
 
@@ -2141,7 +2141,7 @@ rule("Icon 06")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Bolt, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Bolt)));
 	}
 }
 
@@ -2164,7 +2164,7 @@ rule("Icon 07")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Checkmark, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Checkmark)));
 	}
 }
 
@@ -2187,7 +2187,7 @@ rule("Icon 08")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Circle, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Circle)));
 	}
 }
 
@@ -2210,7 +2210,7 @@ rule("Icon 09")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Club, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Club)));
 	}
 }
 
@@ -2233,7 +2233,7 @@ rule("Icon 10")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Diamond, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Diamond)));
 	}
 }
 
@@ -2256,7 +2256,7 @@ rule("Icon 11")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Dizzy, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Dizzy)));
 	}
 }
 
@@ -2279,7 +2279,7 @@ rule("Icon 12")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Exclamation Mark, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Exclamation Mark)));
 	}
 }
 
@@ -2302,7 +2302,7 @@ rule("Icon 13")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Eye, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Eye)));
 	}
 }
 
@@ -2325,7 +2325,7 @@ rule("Icon 14")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Fire, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Fire)));
 	}
 }
 
@@ -2348,7 +2348,7 @@ rule("Icon 15")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Flag, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Flag)));
 	}
 }
 
@@ -2371,7 +2371,7 @@ rule("Icon 16")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Halo, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Halo)));
 	}
 }
 
@@ -2394,7 +2394,7 @@ rule("Icon 17")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Happy, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Happy)));
 	}
 }
 
@@ -2417,7 +2417,7 @@ rule("Icon 18")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Heart, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Heart)));
 	}
 }
 
@@ -2440,7 +2440,7 @@ rule("Icon 19")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Moon, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Moon)));
 	}
 }
 
@@ -2463,7 +2463,7 @@ rule("Icon 20")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, No, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(No)));
 	}
 }
 
@@ -2486,7 +2486,7 @@ rule("Icon 21")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Plus, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Plus)));
 	}
 }
 
@@ -2509,7 +2509,7 @@ rule("Icon 22")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Poison, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Poison)));
 	}
 }
 
@@ -2532,7 +2532,7 @@ rule("Icon 23")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Poison 2, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Poison 2)));
 	}
 }
 
@@ -2555,7 +2555,7 @@ rule("Icon 24")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Question Mark, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Question Mark)));
 	}
 }
 
@@ -2578,7 +2578,7 @@ rule("Icon 25")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Radioactive, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Radioactive)));
 	}
 }
 
@@ -2601,7 +2601,7 @@ rule("Icon 26")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Recycle, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Recycle)));
 	}
 }
 
@@ -2624,7 +2624,7 @@ rule("Icon 27")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Ring Thick, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Ring Thick)));
 	}
 }
 
@@ -2647,7 +2647,7 @@ rule("Icon 28")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Ring Thin, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Ring Thin)));
 	}
 }
 
@@ -2670,7 +2670,7 @@ rule("Icon 29")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Sad, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Sad)));
 	}
 }
 
@@ -2693,7 +2693,7 @@ rule("Icon 30")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Skull, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Skull)));
 	}
 }
 
@@ -2716,7 +2716,7 @@ rule("Icon 31")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Spade, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Spade)));
 	}
 }
 
@@ -2739,7 +2739,7 @@ rule("Icon 32")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Spiral, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Spiral)));
 	}
 }
 
@@ -2762,7 +2762,7 @@ rule("Icon 33")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Stop, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Stop)));
 	}
 }
 
@@ -2785,7 +2785,7 @@ rule("Icon 34")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Trashcan, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Trashcan)));
 	}
 }
 
@@ -2808,7 +2808,7 @@ rule("Icon 35")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Warning, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(Warning)));
 	}
 }
 
@@ -2831,7 +2831,7 @@ rule("Icon 36")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, X, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0}", Icon String(X)));
 	}
 }
 
@@ -2884,8 +2884,8 @@ rule("Aura 01")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, White, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: White"));
 	}
 }
 
@@ -2907,8 +2907,8 @@ rule("Aura 02")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Yellow, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: Yellow"));
 	}
 }
 
@@ -2930,8 +2930,8 @@ rule("Aura 03")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Green, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: Green"));
 	}
 }
 
@@ -2953,8 +2953,8 @@ rule("Aura 04")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Purple, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: Purple"));
 	}
 }
 
@@ -2976,8 +2976,8 @@ rule("Aura 05")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Red, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: Red"));
 	}
 }
 
@@ -2999,8 +2999,8 @@ rule("Aura 06")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Blue, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: Blue"));
 	}
 }
 
@@ -3022,8 +3022,8 @@ rule("Aura 07")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Aqua, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: Aqua"));
 	}
 }
 
@@ -3045,8 +3045,8 @@ rule("Aura 08")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Orange, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: Orange"));
 	}
 }
 
@@ -3068,8 +3068,8 @@ rule("Aura 09")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Sky Blue, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: Sky Blue"));
 	}
 }
 
@@ -3091,8 +3091,8 @@ rule("Aura 10")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Turquoise, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: Turquoise"));
 	}
 }
 
@@ -3114,8 +3114,8 @@ rule("Aura 11")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Lime Green, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: Lime Green"));
 	}
 }
 
