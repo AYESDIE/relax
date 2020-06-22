@@ -17,6 +17,9 @@ variables
 		13: SLO_MO_VOTES
 		14: SLO_MO_ENABLE
 		15: CUSTOM_BOT_ENABLE
+		16: EMOTE_SYNC
+		17: EMOTE_SIGNAL
+		18: EMOTE_SYNC_ENABLE
 		21: VERSION
 
 	player:
@@ -53,6 +56,8 @@ variables
 		30: HUD_GUARD
 		31: MENU_GUARD
 		32: MENU_ICON
+		33: EMOTE_SYNC
+		34: EMOTE_SLOT
 }
 
 disabled rule("GLOBAL")
@@ -76,6 +81,7 @@ rule("init")
 		Global.MATCH_TIME = 1800;
 		Global.SLO_MO_ENABLE = False;
 		Global.CUSTOM_BOT_ENABLE = False;
+		Global.EMOTE_SYNC_ENABLE = True;
 		Global.CUSTOM_BOT_1 = Hero(Mercy);
 		Global.CUSTOM_BOT_2 = Hero(Mercy);
 		Global.BOT_SPAWN = False;
@@ -171,6 +177,8 @@ rule("init (join)")
 		Event Player.HUD_GUARD = False;
 		Event Player.MENU_GUARD = False;
 		Event Player.MENU_ICON = Custom String("\\/");
+		Event Player.EMOTE_SYNC = False;
+		Event Player.EMOTE_SLOT = 0;
 	}
 }
 
@@ -958,12 +966,12 @@ rule("Sleep Start")
 			Clear Status(Event Player, Phased Out);
 			Wait(0.250, Ignore Condition);
 			Small Message(Event Player, Custom String("Sleep: ON"));
-		Set Status(Event Player, Null, Knocked Down, 9999);
-		Wait(0.250, Ignore Condition);
-		If(!Event Player.CHILL);
-			Set Status(Event Player, Null, Phased Out, 9999);
+			Set Status(Event Player, Null, Knocked Down, 9999);
 			Wait(0.250, Ignore Condition);
-			Heal(Event Player, Null, 10000);
+			If(!Event Player.CHILL);
+				Set Status(Event Player, Null, Phased Out, 9999);
+				Wait(0.250, Ignore Condition);
+				Heal(Event Player, Null, 10000);
 	}
 }
 
@@ -1294,8 +1302,8 @@ rule("Camera Fly")
 		Else;
 			Start Camera(Event Player, Event Player.FLY_CAMERA, Event Player.FLY_CAMERA, 0);
 			Stop Chasing Player Variable(Event Player, FLY_CAMERA);
-		Wait(0.100, Ignore Condition);
-		Loop If Condition Is True;
+			Wait(0.100, Ignore Condition);
+			Loop If Condition Is True;
 	}
 }
 
@@ -1343,82 +1351,82 @@ rule("Menu Start")
 			Create HUD Text(Event Player, Null, Custom String("  - Slo Mo: Crouch + Ultimate + Acknowledge"), Null, Left, 2300, White, White,
 				White, Sort Order, Default Visibility);
 			Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		If(Event Player == Host Player && Global.CUSTOM_BOT_ENABLE);
-			Wait(0.010, Ignore Condition);
-			Create HUD Text(Event Player, Null, Custom String("  - Bot: Ultimate + Group Up"), Null, Left, 2200, White, White, White,
-				Sort Order, Default Visibility);
-			Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		If(Event Player == Host Player && (Global.SLO_MO_ENABLE || Global.CUSTOM_BOT_ENABLE));
-			Wait(0.010, Ignore Condition);
-			Create HUD Text(Event Player, Null, Null, Custom String(
-				"---- Mod Options --------------------------------------------------------------------------"), Left, 2100, White, White, Red,
-				Sort Order, Default Visibility);
-			Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Disable Aura: Look Down + Crouch + Voiceline Up or Down"), Null, Left, 1900,
-			White, White, White, Sort Order, Default Visibility);
-		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Aura: Crouch + Voiceline (Up/Down to cycle)"), Null, Left, 1800, White,
-			White, White, Sort Order, Default Visibility);
-		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Disable Icon: Look Down + Crouch + Voiceline (Left/Right)"), Null, Left,
-			1700, White, White, White, Sort Order, Default Visibility);
-		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Icon: Crouch + Voiceline (Left/Right to cycle)"), Null, Left, 1600, White,
-			White, White, Sort Order, Default Visibility);
-		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Custom String(
-			"---- Customization -----------------------------------------------------------------------"), Left, 1500, White, White,
-			Orange, Sort Order, Default Visibility);
-		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - HUD: (Hold) Crouch + Primary Fire + Secondary Fire"), Null, Left, 1400,
-			White, White, White, Sort Order, Default Visibility);
-		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Hero Swap: Look Down + Jump + Crouch"), Null, Left, 1300, White, White,
-			White, Sort Order, Default Visibility);
-		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Camera: (Hold) Crouch + Ability 1"), Null, Left, 1200, White, White, White,
-			Sort Order, Default Visibility);
-		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Custom String(
-			"---- Utility ------------------------------------------------------------------------------------------"), Left, 1100, White,
-			White, Lime Green, Sort Order, Default Visibility);
-		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Sleep: (Toggle) Ultimate Status; (Disable) Crouch"), Null, Left, 1000,
-			White, White, White, Sort Order, Default Visibility);
-		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Invisible: Crouch + Group Up"), Null, Left, 900, White, White, White,
-			Sort Order, Default Visibility);
-		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Fly: (Hold) Ability 1 + Jump"), Null, Left, 800, White, White, White,
-			Sort Order, Default Visibility);
-		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Teleport: Interact"), Null, Left, 700, White, White, White, Sort Order,
-			Default Visibility);
-		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Custom String(" - Chill: Crouch + Emote"), Left, 600, White, White, White, Sort Order,
-			Default Visibility);
-		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Custom String(
-			"---- Chill -------------------------------------------------------------------------------------------"), Left, 500, White,
-			White, Sky Blue, Sort Order, Default Visibility);
-		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Event Player.MENU_ICON = Custom String("/\\");
-		Event Player.MENU_GUARD = False;
+			If(Event Player == Host Player && Global.CUSTOM_BOT_ENABLE);
+				Wait(0.010, Ignore Condition);
+				Create HUD Text(Event Player, Null, Custom String("  - Bot: Ultimate + Group Up"), Null, Left, 2200, White, White, White,
+					Sort Order, Default Visibility);
+				Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+				If(Event Player == Host Player && (Global.SLO_MO_ENABLE || Global.CUSTOM_BOT_ENABLE));
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Null, Custom String(
+						"---- Mod Options --------------------------------------------------------------------------"), Left, 2100, White, White, Red,
+						Sort Order, Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Custom String("  - Disable Aura: Look Down + Crouch + Voiceline Up or Down"), Null, Left, 1900,
+						White, White, White, Sort Order, Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Custom String("  - Aura: Crouch + Voiceline (Up/Down to cycle)"), Null, Left, 1800, White,
+						White, White, Sort Order, Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Custom String("  - Disable Icon: Look Down + Crouch + Voiceline (Left/Right)"), Null, Left,
+						1700, White, White, White, Sort Order, Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Custom String("  - Icon: Crouch + Voiceline (Left/Right to cycle)"), Null, Left, 1600, White,
+						White, White, Sort Order, Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Null, Custom String(
+						"---- Customization -----------------------------------------------------------------------"), Left, 1500, White, White,
+						Orange, Sort Order, Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Custom String("  - HUD: (Hold) Crouch + Primary Fire + Secondary Fire"), Null, Left, 1400,
+						White, White, White, Sort Order, Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Custom String("  - Hero Swap: Look Down + Jump + Crouch"), Null, Left, 1300, White, White,
+						White, Sort Order, Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Custom String("  - Camera: (Hold) Crouch + Ability 1"), Null, Left, 1200, White, White, White,
+						Sort Order, Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Null, Custom String(
+						"---- Utility ------------------------------------------------------------------------------------------"), Left, 1100, White,
+						White, Lime Green, Sort Order, Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Custom String("  - Sleep: (Toggle) Ultimate Status; (Disable) Crouch"), Null, Left, 1000,
+						White, White, White, Sort Order, Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Custom String("  - Invisible: Crouch + Group Up"), Null, Left, 900, White, White, White,
+						Sort Order, Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Custom String("  - Fly: (Hold) Ability 1 + Jump"), Null, Left, 800, White, White, White,
+						Sort Order, Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Custom String("  - Teleport: Interact"), Null, Left, 700, White, White, White, Sort Order,
+						Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Null, Custom String(" - Chill: Crouch + Emote"), Left, 600, White, White, White, Sort Order,
+						Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Wait(0.010, Ignore Condition);
+					Create HUD Text(Event Player, Null, Null, Custom String(
+						"---- Chill -------------------------------------------------------------------------------------------"), Left, 500, White,
+						White, Sky Blue, Sort Order, Default Visibility);
+					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+					Event Player.MENU_ICON = Custom String("/\\");
+					Event Player.MENU_GUARD = False;
 	}
 }
 
@@ -1682,7 +1690,7 @@ rule("Bot Behaviour")
 			Wait(5, Ignore Condition);
 			Stop Holding Button(Event Player, Crouch);
 			Teleport(Event Player, Random Value In Array(All Players(All Teams)));
-		Loop;
+			Loop;
 	}
 }
 
@@ -1862,8 +1870,8 @@ rule("Slo Mo Request Toggle")
 			Global.SLO_MO = True;
 		Else;
 			Big Message(All Players(All Teams), Custom String("Sorry, Try again in 5 minutes."));
-		Wait(300, Ignore Condition);
-		Global.SLO_MO = False;
+			Wait(300, Ignore Condition);
+			Global.SLO_MO = False;
 	}
 }
 
@@ -3392,5 +3400,207 @@ disabled rule("New HUD Start")
 			"----------------------------------- {0} -----------------------------------", Event Player.MENU_ARRAY), Right, 13, White,
 			White, White, String, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
+	}
+}
+
+rule("Emote Sync Toggle")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Ultimate) == True;
+		Global.EMOTE_SYNC_ENABLE == True;
+	}
+
+	actions
+	{
+		If(Global.EMOTE_SYNC && Event Player != Host Player);
+			Wait(2, Abort When False);
+			Small Message(Event Player, Custom String("Emote Sync Toggle in 3..."));
+			Wait(1, Abort When False);
+			Small Message(Event Player, Custom String("Emote Sync Toggle in 2..."));
+			Wait(1, Abort When False);
+			Small Message(Event Player, Custom String("Emote Sync Toggle in 1..."));
+			Wait(1, Abort When False);
+			Event Player.EMOTE_SYNC = !Event Player.EMOTE_SYNC;
+			Wait(0.030, Ignore Condition);
+			Small Message(Event Player, Custom String("Emote Sync Toggle: {0}", Event Player.EMOTE_SYNC));
+		Else If(Event Player == Host Player);
+			Wait(2, Abort When False);
+			Small Message(Event Player, Custom String("Emote Sync Toggle in 3..."));
+			Wait(1, Abort When False);
+			Small Message(Event Player, Custom String("Emote Sync Toggle in 2..."));
+			Wait(1, Abort When False);
+			Small Message(Event Player, Custom String("Emote Sync Toggle in 1..."));
+			Wait(1, Abort When False);
+			Event Player.EMOTE_SYNC = !Event Player.EMOTE_SYNC;
+			Wait(0.030, Ignore Condition);
+			Small Message(Event Player, Custom String("Emote Sync Toggle: {0}", Event Player.EMOTE_SYNC));
+			Global.EMOTE_SYNC = Event Player.EMOTE_SYNC;
+			Wait(0.250, Ignore Condition);
+			If(Global.EMOTE_SYNC);
+				Big Message(All Players(All Teams), Custom String("EMOTE SYNC ENABLED..."));
+				Wait(5, Ignore Condition);
+				Big Message(All Players(All Teams), Custom String("Hold Ultimate for 5 seconds to enable it..."));
+				Wait(5, Ignore Condition);
+				Big Message(All Players(All Teams), Custom String("Then use the emote you want to sync..."));
+				Wait(3, Ignore Condition);
+			Else;
+				Big Message(All Players(All Teams), Custom String("EMOTE SYNC DISABLED..."));
+				Wait(5, Ignore Condition);
+	}
+}
+
+rule("Emote Slot Left")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.EMOTE_SYNC == True;
+		Is Communicating(Event Player, Emote Left) == True;
+		Global.EMOTE_SYNC == True;
+	}
+
+	actions
+	{
+		Event Player.EMOTE_SLOT = 0;
+		Small Message(Event Player, Custom String("Emote Selected: Left"));
+	}
+}
+
+rule("Emote Slot Up")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.EMOTE_SYNC == True;
+		Is Communicating(Event Player, Emote Up) == True;
+		Global.EMOTE_SYNC == True;
+	}
+
+	actions
+	{
+		Event Player.EMOTE_SLOT = 1;
+		Small Message(Event Player, Custom String("Emote Selected: Up"));
+	}
+}
+
+rule("Emote Slot Right")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.EMOTE_SYNC == True;
+		Is Communicating(Event Player, Emote Right) == True;
+		Global.EMOTE_SYNC == True;
+	}
+
+	actions
+	{
+		Event Player.EMOTE_SLOT = 2;
+		Small Message(Event Player, Custom String("Emote Selected: Right"));
+	}
+}
+
+rule("Emote Slot Down")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.EMOTE_SYNC == True;
+		Is Communicating(Event Player, Emote Down) == True;
+		Global.EMOTE_SYNC == True;
+	}
+
+	actions
+	{
+		Event Player.EMOTE_SLOT = 3;
+		Small Message(Event Player, Custom String("Emote Selected: Down"));
+	}
+}
+
+rule("Emote Signal Transmit")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Global.EMOTE_SYNC == True;
+		Host Player == Event Player;
+		Is Communicating(Event Player, Acknowledge) == True;
+	}
+
+	actions
+	{
+		Wait(2, Ignore Condition);
+		Global.EMOTE_SIGNAL = True;
+		Wait(0.500, Ignore Condition);
+		Big Message(All Players(All Teams), Custom String("Emote Sync Signal Sent..."));
+		Global.EMOTE_SIGNAL = False;
+		Wait(10, Ignore Condition);
+	}
+}
+
+rule("Emote Signal Receive")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Global.EMOTE_SIGNAL == True;
+		Event Player.EMOTE_SYNC == True;
+	}
+
+	actions
+	{
+		Small Message(Event Player, Custom String("Emote Sync signal received..."));
+		If(Event Player.EMOTE_SLOT == 0);
+			Communicate(Event Player, Emote Left);
+		Else If(Event Player.EMOTE_SLOT == 1);
+			Communicate(Event Player, Emote Up);
+		Else If(Event Player.EMOTE_SLOT == 2);
+			Communicate(Event Player, Emote Right);
+		Else If(Event Player.EMOTE_SLOT == 3);
+			Communicate(Event Player, Emote Down);
 	}
 }
