@@ -1346,87 +1346,92 @@ rule("Menu Start")
 	actions
 	{
 		Event Player.MENU_GUARD = True;
-		If(Event Player == Host Player && Global.SLO_MO_ENABLE);
-			Wait(0.010, Ignore Condition);
-			Create HUD Text(Event Player, Null, Custom String("  - Slo Mo: Crouch + Ultimate + Acknowledge"), Null, Left, 2300, White, White,
-				White, Sort Order, Default Visibility);
-			Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-			If(Event Player == Host Player && Global.CUSTOM_BOT_ENABLE);
-				Wait(0.010, Ignore Condition);
-				Create HUD Text(Event Player, Null, Custom String("  - Bot: Ultimate + Group Up"), Null, Left, 2200, White, White, White,
-					Sort Order, Default Visibility);
-				Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-				If(Event Player == Host Player && (Global.SLO_MO_ENABLE || Global.CUSTOM_BOT_ENABLE));
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Null, Custom String(
-						"---- Mod Options --------------------------------------------------------------------------"), Left, 2100, White, White, Red,
-						Sort Order, Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Custom String("  - Disable Aura: Look Down + Crouch + Voiceline Up or Down"), Null, Left, 1900,
-						White, White, White, Sort Order, Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Custom String("  - Aura: Crouch + Voiceline (Up/Down to cycle)"), Null, Left, 1800, White,
-						White, White, Sort Order, Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Custom String("  - Disable Icon: Look Down + Crouch + Voiceline (Left/Right)"), Null, Left,
-						1700, White, White, White, Sort Order, Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Custom String("  - Icon: Crouch + Voiceline (Left/Right to cycle)"), Null, Left, 1600, White,
-						White, White, Sort Order, Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Null, Custom String(
-						"---- Customization -----------------------------------------------------------------------"), Left, 1500, White, White,
-						Orange, Sort Order, Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Custom String("  - HUD: (Hold) Crouch + Primary Fire + Secondary Fire"), Null, Left, 1400,
-						White, White, White, Sort Order, Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Custom String("  - Hero Swap: Look Down + Jump + Crouch"), Null, Left, 1300, White, White,
-						White, Sort Order, Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Custom String("  - Camera: (Hold) Crouch + Ability 1"), Null, Left, 1200, White, White, White,
-						Sort Order, Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Null, Custom String(
-						"---- Utility ------------------------------------------------------------------------------------------"), Left, 1100, White,
-						White, Lime Green, Sort Order, Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Custom String("  - Sleep: (Toggle) Ultimate Status; (Disable) Crouch"), Null, Left, 1000,
-						White, White, White, Sort Order, Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Custom String("  - Invisible: Crouch + Group Up"), Null, Left, 900, White, White, White,
-						Sort Order, Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Custom String("  - Fly: (Hold) Ability 1 + Jump"), Null, Left, 800, White, White, White,
-						Sort Order, Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Custom String("  - Teleport: Interact"), Null, Left, 700, White, White, White, Sort Order,
-						Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Null, Custom String(" - Chill: Crouch + Emote"), Left, 600, White, White, White, Sort Order,
-						Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Wait(0.010, Ignore Condition);
-					Create HUD Text(Event Player, Null, Null, Custom String(
-						"---- Chill -------------------------------------------------------------------------------------------"), Left, 500, White,
-						White, Sky Blue, Sort Order, Default Visibility);
-					Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-					Event Player.MENU_ICON = Custom String("/\\");
-					Event Player.MENU_GUARD = False;
+		Skip If(!(Event Player == Host Player && Global.EMOTE_SYNC_ENABLE), 3);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("  - Emote Sync: Hold Ultimate (Toggle); Acknowledge (Start Signal)"), Null,
+			Left, 2400, White, White, White, Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Skip If(!(Event Player == Host Player && Global.SLO_MO_ENABLE), 3);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("  - Slo Mo: Crouch + Ultimate + Acknowledge"), Null, Left, 2300, White, White,
+			White, Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Skip If(!(Event Player == Host Player && Global.CUSTOM_BOT_ENABLE), 3);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("  - Bot: Ultimate + Group Up"), Null, Left, 2200, White, White, White,
+			Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Skip If(!(Event Player == Host Player && ((Global.SLO_MO_ENABLE || Global.CUSTOM_BOT_ENABLE) || Global.EMOTE_SYNC_ENABLE)), 3);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Null, Custom String(
+			"---- Mod Options --------------------------------------------------------------------------"), Left, 2100, White, White, Red,
+			Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("  - Disable Aura: Look Down + Crouch + Voiceline Up or Down"), Null, Left, 1900,
+			White, White, White, Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("  - Aura: Crouch + Voiceline (Up/Down to cycle)"), Null, Left, 1800, White,
+			White, White, Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("  - Disable Icon: Look Down + Crouch + Voiceline (Left/Right)"), Null, Left,
+			1700, White, White, White, Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("  - Icon: Crouch + Voiceline (Left/Right to cycle)"), Null, Left, 1600, White,
+			White, White, Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Null, Custom String(
+			"---- Customization -----------------------------------------------------------------------"), Left, 1500, White, White,
+			Orange, Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("  - HUD: (Hold) Crouch + Primary Fire + Secondary Fire"), Null, Left, 1400,
+			White, White, White, Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("  - Hero Swap: Look Down + Jump + Crouch"), Null, Left, 1300, White, White,
+			White, Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("  - Camera: (Hold) Crouch + Ability 1"), Null, Left, 1200, White, White, White,
+			Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Null, Custom String(
+			"---- Utility ------------------------------------------------------------------------------------------"), Left, 1100, White,
+			White, Lime Green, Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("  - Sleep: (Toggle) Ultimate Status; (Disable) Crouch"), Null, Left, 1000,
+			White, White, White, Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("  - Invisible: Crouch + Group Up"), Null, Left, 900, White, White, White,
+			Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("  - Fly: (Hold) Ability 1 + Jump"), Null, Left, 800, White, White, White,
+			Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("  - Teleport: Interact"), Null, Left, 700, White, White, White, Sort Order,
+			Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Null, Custom String(" - Chill: Crouch + Emote"), Left, 600, White, White, White, Sort Order,
+			Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Null, Custom String(
+			"---- Chill -------------------------------------------------------------------------------------------"), Left, 500, White,
+			White, Sky Blue, Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Event Player.MENU_ICON = Custom String("/\\");
+		Event Player.MENU_GUARD = False;
 	}
 }
 
