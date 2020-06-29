@@ -81,7 +81,7 @@ rule("init")
 		Global.MATCH_TIME = 1800;
 		Global.SLO_MO_ENABLE = False;
 		Global.CUSTOM_BOT_ENABLE = False;
-		Global.EMOTE_SYNC_ENABLE = True;
+		Global.EMOTE_SYNC_ENABLE = False;
 		Global.CUSTOM_BOT_1 = Hero(Mercy);
 		Global.CUSTOM_BOT_2 = Hero(Mercy);
 		Global.BOT_SPAWN = False;
@@ -95,7 +95,11 @@ rule("init")
 		Global.SLO_MO_REQUEST = False;
 		Global.SLO_MO_LOBBY_COUNT = 0;
 		Global.SLO_MO_COUNT_VOTE = False;
-		Global.VERSION = Custom String("(Master; Experimental; Base 1.5.0)");
+		Global.VERSION = Custom String("1.6.0");
+		Wait(Global.MATCH_TIME / 2, Ignore Condition);
+		Big Message(All Players(All Teams), Custom String("hydrate yourself chat..."));
+		Wait(4, Ignore Condition);
+		Big Message(All Players(All Teams), Custom String("drink water..."));
 	}
 }
 
@@ -114,11 +118,11 @@ rule("HUD")
 	actions
 	{
 		Wait(3, Ignore Condition);
-		Big Message(All Players(All Teams), Custom String("Improving... Adapting... Overcoming..."));
+		Big Message(All Players(All Teams), Custom String("Improvise... Adapt... Overcome..."));
 		disabled Wait(5, Ignore Condition);
 		disabled Big Message(All Players(All Teams), Custom String("Join Match Voice Chat for Music"));
 		Wait(5, Ignore Condition);
-		Big Message(All Players(All Teams), Custom String("Welcome"));
+		Big Message(All Players(All Teams), Custom String("Welcome..."));
 		disabled Create HUD Text(All Players(All Teams), Null, Null, Custom String("Relax v0.1 is a script for chill server by AYESDIE#1904"),
 			Right, 0, White, Purple, Purple, Visible To and String, Default Visibility);
 		disabled Create HUD Text(All Players(All Teams), Null, Null, Custom String("Join the discord server in the description to report bugs."),
@@ -1348,8 +1352,8 @@ rule("Menu Start")
 		Event Player.MENU_GUARD = True;
 		Skip If(!(Event Player == Host Player && Global.EMOTE_SYNC_ENABLE), 3);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Emote Sync: Hold Ultimate (Toggle); Acknowledge (Start Signal)"), Null,
-			Left, 2400, White, White, White, Sort Order, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("  - Emote Sync: Hold Ultimate (Toggle); Acknowledge (Signal)"), Null, Left,
+			2400, White, White, White, Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Skip If(!(Event Player == Host Player && Global.SLO_MO_ENABLE), 3);
 		Wait(0.010, Ignore Condition);
@@ -1361,7 +1365,7 @@ rule("Menu Start")
 		Create HUD Text(Event Player, Null, Custom String("  - Bot: Ultimate + Group Up"), Null, Left, 2200, White, White, White,
 			Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
-		Skip If(!(Event Player == Host Player && ((Global.SLO_MO_ENABLE || Global.CUSTOM_BOT_ENABLE) || Global.EMOTE_SYNC_ENABLE)), 3);
+		Skip If(!(Event Player == Host Player && (Global.SLO_MO_ENABLE || Global.CUSTOM_BOT_ENABLE || Global.EMOTE_SYNC_ENABLE)), 3);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Null, Custom String(
 			"---- Mod Options --------------------------------------------------------------------------"), Left, 2100, White, White, Red,
