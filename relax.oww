@@ -1994,6 +1994,208 @@ rule("Slo Mo Count Vote")
 	}
 }
 
+rule("Emote Sync Toggle")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Ultimate) == True;
+		Global.EMOTE_SYNC_ENABLE == True;
+	}
+
+	actions
+	{
+		If(Global.EMOTE_SYNC && Event Player != Host Player);
+			Wait(2, Abort When False);
+			Small Message(Event Player, Custom String("Emote Sync Toggle in 3..."));
+			Wait(1, Abort When False);
+			Small Message(Event Player, Custom String("Emote Sync Toggle in 2..."));
+			Wait(1, Abort When False);
+			Small Message(Event Player, Custom String("Emote Sync Toggle in 1..."));
+			Wait(1, Abort When False);
+			Event Player.EMOTE_SYNC = !Event Player.EMOTE_SYNC;
+			Wait(0.030, Ignore Condition);
+			Small Message(Event Player, Custom String("Emote Sync Toggle: {0}", Event Player.EMOTE_SYNC));
+		Else If(Event Player == Host Player);
+			Wait(2, Abort When False);
+			Small Message(Event Player, Custom String("Emote Sync Toggle in 3..."));
+			Wait(1, Abort When False);
+			Small Message(Event Player, Custom String("Emote Sync Toggle in 2..."));
+			Wait(1, Abort When False);
+			Small Message(Event Player, Custom String("Emote Sync Toggle in 1..."));
+			Wait(1, Abort When False);
+			Event Player.EMOTE_SYNC = !Event Player.EMOTE_SYNC;
+			Wait(0.030, Ignore Condition);
+			Small Message(Event Player, Custom String("Emote Sync Toggle: {0}", Event Player.EMOTE_SYNC));
+			Global.EMOTE_SYNC = Event Player.EMOTE_SYNC;
+			Wait(0.250, Ignore Condition);
+			If(Global.EMOTE_SYNC);
+				Big Message(All Players(All Teams), Custom String("EMOTE SYNC ENABLED..."));
+				Wait(5, Ignore Condition);
+				Big Message(All Players(All Teams), Custom String("Hold Ultimate for 5 seconds to enable it..."));
+				Wait(5, Ignore Condition);
+				Big Message(All Players(All Teams), Custom String("Then use the emote you want to sync..."));
+				Wait(3, Ignore Condition);
+			Else;
+				Big Message(All Players(All Teams), Custom String("EMOTE SYNC DISABLED..."));
+				Wait(5, Ignore Condition);
+	}
+}
+
+rule("Emote Slot Left")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.EMOTE_SYNC == True;
+		Is Communicating(Event Player, Emote Left) == True;
+		Global.EMOTE_SYNC == True;
+	}
+
+	actions
+	{
+		Event Player.EMOTE_SLOT = 0;
+		Small Message(Event Player, Custom String("Emote Selected: Left"));
+	}
+}
+
+rule("Emote Slot Up")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.EMOTE_SYNC == True;
+		Is Communicating(Event Player, Emote Up) == True;
+		Global.EMOTE_SYNC == True;
+	}
+
+	actions
+	{
+		Event Player.EMOTE_SLOT = 1;
+		Small Message(Event Player, Custom String("Emote Selected: Up"));
+	}
+}
+
+rule("Emote Slot Right")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.EMOTE_SYNC == True;
+		Is Communicating(Event Player, Emote Right) == True;
+		Global.EMOTE_SYNC == True;
+	}
+
+	actions
+	{
+		Event Player.EMOTE_SLOT = 2;
+		Small Message(Event Player, Custom String("Emote Selected: Right"));
+	}
+}
+
+rule("Emote Slot Down")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.EMOTE_SYNC == True;
+		Is Communicating(Event Player, Emote Down) == True;
+		Global.EMOTE_SYNC == True;
+	}
+
+	actions
+	{
+		Event Player.EMOTE_SLOT = 3;
+		Small Message(Event Player, Custom String("Emote Selected: Down"));
+	}
+}
+
+rule("Emote Signal Transmit")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Global.EMOTE_SYNC == True;
+		Host Player == Event Player;
+		Is Communicating(Event Player, Acknowledge) == True;
+	}
+
+	actions
+	{
+		Wait(2, Ignore Condition);
+		Global.EMOTE_SIGNAL = True;
+		Wait(0.500, Ignore Condition);
+		Big Message(All Players(All Teams), Custom String("Emote Sync Signal Sent..."));
+		Global.EMOTE_SIGNAL = False;
+		Wait(10, Ignore Condition);
+	}
+}
+
+rule("Emote Signal Receive")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Global.EMOTE_SIGNAL == True;
+		Event Player.EMOTE_SYNC == True;
+	}
+
+	actions
+	{
+		Small Message(Event Player, Custom String("Emote Sync signal received..."));
+		If(Event Player.EMOTE_SLOT == 0);
+			Communicate(Event Player, Emote Left);
+		Else If(Event Player.EMOTE_SLOT == 1);
+			Communicate(Event Player, Emote Up);
+		Else If(Event Player.EMOTE_SLOT == 2);
+			Communicate(Event Player, Emote Right);
+		Else If(Event Player.EMOTE_SLOT == 3);
+			Communicate(Event Player, Emote Down);
+	}
+}
+
 disabled rule("Icons")
 {
 	event
@@ -3409,207 +3611,5 @@ disabled rule("New HUD Start")
 			"----------------------------------- {0} -----------------------------------", Event Player.MENU_ARRAY), Right, 13, White,
 			White, White, String, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
-	}
-}
-
-rule("Emote Sync Toggle")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Is Button Held(Event Player, Ultimate) == True;
-		Global.EMOTE_SYNC_ENABLE == True;
-	}
-
-	actions
-	{
-		If(Global.EMOTE_SYNC && Event Player != Host Player);
-			Wait(2, Abort When False);
-			Small Message(Event Player, Custom String("Emote Sync Toggle in 3..."));
-			Wait(1, Abort When False);
-			Small Message(Event Player, Custom String("Emote Sync Toggle in 2..."));
-			Wait(1, Abort When False);
-			Small Message(Event Player, Custom String("Emote Sync Toggle in 1..."));
-			Wait(1, Abort When False);
-			Event Player.EMOTE_SYNC = !Event Player.EMOTE_SYNC;
-			Wait(0.030, Ignore Condition);
-			Small Message(Event Player, Custom String("Emote Sync Toggle: {0}", Event Player.EMOTE_SYNC));
-		Else If(Event Player == Host Player);
-			Wait(2, Abort When False);
-			Small Message(Event Player, Custom String("Emote Sync Toggle in 3..."));
-			Wait(1, Abort When False);
-			Small Message(Event Player, Custom String("Emote Sync Toggle in 2..."));
-			Wait(1, Abort When False);
-			Small Message(Event Player, Custom String("Emote Sync Toggle in 1..."));
-			Wait(1, Abort When False);
-			Event Player.EMOTE_SYNC = !Event Player.EMOTE_SYNC;
-			Wait(0.030, Ignore Condition);
-			Small Message(Event Player, Custom String("Emote Sync Toggle: {0}", Event Player.EMOTE_SYNC));
-			Global.EMOTE_SYNC = Event Player.EMOTE_SYNC;
-			Wait(0.250, Ignore Condition);
-			If(Global.EMOTE_SYNC);
-				Big Message(All Players(All Teams), Custom String("EMOTE SYNC ENABLED..."));
-				Wait(5, Ignore Condition);
-				Big Message(All Players(All Teams), Custom String("Hold Ultimate for 5 seconds to enable it..."));
-				Wait(5, Ignore Condition);
-				Big Message(All Players(All Teams), Custom String("Then use the emote you want to sync..."));
-				Wait(3, Ignore Condition);
-			Else;
-				Big Message(All Players(All Teams), Custom String("EMOTE SYNC DISABLED..."));
-				Wait(5, Ignore Condition);
-	}
-}
-
-rule("Emote Slot Left")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.EMOTE_SYNC == True;
-		Is Communicating(Event Player, Emote Left) == True;
-		Global.EMOTE_SYNC == True;
-	}
-
-	actions
-	{
-		Event Player.EMOTE_SLOT = 0;
-		Small Message(Event Player, Custom String("Emote Selected: Left"));
-	}
-}
-
-rule("Emote Slot Up")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.EMOTE_SYNC == True;
-		Is Communicating(Event Player, Emote Up) == True;
-		Global.EMOTE_SYNC == True;
-	}
-
-	actions
-	{
-		Event Player.EMOTE_SLOT = 1;
-		Small Message(Event Player, Custom String("Emote Selected: Up"));
-	}
-}
-
-rule("Emote Slot Right")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.EMOTE_SYNC == True;
-		Is Communicating(Event Player, Emote Right) == True;
-		Global.EMOTE_SYNC == True;
-	}
-
-	actions
-	{
-		Event Player.EMOTE_SLOT = 2;
-		Small Message(Event Player, Custom String("Emote Selected: Right"));
-	}
-}
-
-rule("Emote Slot Down")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.EMOTE_SYNC == True;
-		Is Communicating(Event Player, Emote Down) == True;
-		Global.EMOTE_SYNC == True;
-	}
-
-	actions
-	{
-		Event Player.EMOTE_SLOT = 3;
-		Small Message(Event Player, Custom String("Emote Selected: Down"));
-	}
-}
-
-rule("Emote Signal Transmit")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Global.EMOTE_SYNC == True;
-		Host Player == Event Player;
-		Is Communicating(Event Player, Acknowledge) == True;
-	}
-
-	actions
-	{
-		Wait(2, Ignore Condition);
-		Global.EMOTE_SIGNAL = True;
-		Wait(0.500, Ignore Condition);
-		Big Message(All Players(All Teams), Custom String("Emote Sync Signal Sent..."));
-		Global.EMOTE_SIGNAL = False;
-		Wait(10, Ignore Condition);
-	}
-}
-
-rule("Emote Signal Receive")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Global.EMOTE_SIGNAL == True;
-		Event Player.EMOTE_SYNC == True;
-	}
-
-	actions
-	{
-		Small Message(Event Player, Custom String("Emote Sync signal received..."));
-		If(Event Player.EMOTE_SLOT == 0);
-			Communicate(Event Player, Emote Left);
-		Else If(Event Player.EMOTE_SLOT == 1);
-			Communicate(Event Player, Emote Up);
-		Else If(Event Player.EMOTE_SLOT == 2);
-			Communicate(Event Player, Emote Right);
-		Else If(Event Player.EMOTE_SLOT == 3);
-			Communicate(Event Player, Emote Down);
 	}
 }
