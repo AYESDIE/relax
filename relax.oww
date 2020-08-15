@@ -95,7 +95,7 @@ rule("init")
 		Global.SLO_MO_REQUEST = False;
 		Global.SLO_MO_LOBBY_COUNT = 0;
 		Global.SLO_MO_COUNT_VOTE = False;
-		Global.VERSION = Custom String("1.6.2");
+		Global.VERSION = Custom String("1.6.3");
 		Wait(Global.MATCH_TIME / 2, Ignore Condition);
 		Big Message(All Players(All Teams), Custom String("hydrate yourself chat..."));
 		Wait(4, Ignore Condition);
@@ -1656,12 +1656,14 @@ rule("Bot Behaviour")
 	actions
 	{
 		Wait(0.250, Ignore Condition);
+		Event Player.CHILL = !Event Player.CHILL;
 		Set Status(Event Player, Null, Unkillable, 9999);
 		If(!Event Player.TEMP);
 			Event Player.ICON_NUMBER = 11;
 			Wait(0.250, Ignore Condition);
 			Event Player.TEMP = True;
 			Event Player.ICON_NUMBER = 17;
+			Loop;
 		Else;
 			Event Player.ICON_NUMBER = Event Player.ICON_NUMBER;
 			Stop Holding Button(Event Player, Primary Fire);
@@ -1878,6 +1880,8 @@ rule("Slo Mo Request Toggle")
 		If(Global.SLO_MO_VOTES >= Global.SLO_MO_LOBBY_COUNT / 2);
 			Big Message(All Players(All Teams), Custom String("Activating Slo Mo for 5 minutes."));
 			Global.SLO_MO = True;
+			Wait(300, Ignore Condition);
+			Global.SLO_MO = False;
 		Else;
 			Big Message(All Players(All Teams), Custom String("Sorry, Try again in 5 minutes."));
 			Wait(300, Ignore Condition);
