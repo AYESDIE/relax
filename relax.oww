@@ -60,7 +60,7 @@ variables
 		34: EMOTE_SLOT
 }
 
-rule("GLOBAL")
+disabled rule("GLOBAL")
 {
 	event
 	{
@@ -68,7 +68,7 @@ rule("GLOBAL")
 	}
 }
 
-disabled rule("init")
+rule("init")
 {
 	event
 	{
@@ -95,7 +95,7 @@ disabled rule("init")
 		Global.SLO_MO_REQUEST = False;
 		Global.SLO_MO_LOBBY_COUNT = 0;
 		Global.SLO_MO_COUNT_VOTE = False;
-		Global.VERSION = Custom String("1.6.1");
+		Global.VERSION = Custom String("1.6.2");
 		Wait(Global.MATCH_TIME / 2, Ignore Condition);
 		Big Message(All Players(All Teams), Custom String("hydrate yourself chat..."));
 		Wait(4, Ignore Condition);
@@ -103,7 +103,7 @@ disabled rule("init")
 	}
 }
 
-disabled rule("HUD")
+rule("HUD")
 {
 	event
 	{
@@ -142,7 +142,7 @@ disabled rule("HUD")
 	}
 }
 
-rule("PLAYER")
+disabled rule("PLAYER")
 {
 	event
 	{
@@ -150,7 +150,7 @@ rule("PLAYER")
 	}
 }
 
-disabled rule("init (join)")
+rule("init (join)")
 {
 	event
 	{
@@ -186,7 +186,7 @@ disabled rule("init (join)")
 	}
 }
 
-disabled rule("init (first spawn)")
+rule("init (first spawn)")
 {
 	event
 	{
@@ -212,7 +212,7 @@ disabled rule("init (first spawn)")
 	}
 }
 
-rule("Toggle")
+disabled rule("Toggle")
 {
 	event
 	{
@@ -220,7 +220,7 @@ rule("Toggle")
 	}
 }
 
-disabled rule("Chill Toggle")
+rule("Chill Toggle")
 {
 	event
 	{
@@ -242,7 +242,7 @@ disabled rule("Chill Toggle")
 	}
 }
 
-disabled rule("Chill Toggle (Invisible WARN)")
+rule("Chill Toggle (Invisible WARN)")
 {
 	event
 	{
@@ -264,7 +264,7 @@ disabled rule("Chill Toggle (Invisible WARN)")
 	}
 }
 
-disabled rule("Chill Toggle (Fly WARN)")
+rule("Chill Toggle (Fly WARN)")
 {
 	event
 	{
@@ -286,7 +286,7 @@ disabled rule("Chill Toggle (Fly WARN)")
 	}
 }
 
-disabled rule("Teleport Toggle")
+rule("Teleport Toggle")
 {
 	event
 	{
@@ -308,7 +308,7 @@ disabled rule("Teleport Toggle")
 	}
 }
 
-disabled rule("Teleport Toggle (Chill WARN)")
+rule("Teleport Toggle (Chill WARN)")
 {
 	event
 	{
@@ -330,7 +330,7 @@ disabled rule("Teleport Toggle (Chill WARN)")
 	}
 }
 
-disabled rule("Hero Swap Toggle")
+rule("Hero Swap Toggle")
 {
 	event
 	{
@@ -353,7 +353,7 @@ disabled rule("Hero Swap Toggle")
 	}
 }
 
-disabled rule("Hero Swap Toggle (Bot WARN)")
+rule("Hero Swap Toggle (Bot WARN)")
 {
 	event
 	{
@@ -377,7 +377,7 @@ disabled rule("Hero Swap Toggle (Bot WARN)")
 	}
 }
 
-disabled rule("Sleep Toggle")
+rule("Sleep Toggle")
 {
 	event
 	{
@@ -398,7 +398,7 @@ disabled rule("Sleep Toggle")
 	}
 }
 
-disabled rule("Sleep Toggle (Chill WARN)")
+rule("Sleep Toggle (Chill WARN)")
 {
 	event
 	{
@@ -419,7 +419,7 @@ disabled rule("Sleep Toggle (Chill WARN)")
 	}
 }
 
-disabled rule("Fly Toggle")
+rule("Fly Toggle")
 {
 	event
 	{
@@ -446,7 +446,7 @@ disabled rule("Fly Toggle")
 	}
 }
 
-disabled rule("Fly Toggle (WARN)")
+rule("Fly Toggle (WARN)")
 {
 	event
 	{
@@ -473,7 +473,7 @@ disabled rule("Fly Toggle (WARN)")
 	}
 }
 
-disabled rule("Fly Manual Toggle ON")
+rule("Fly Manual Toggle ON")
 {
 	event
 	{
@@ -494,7 +494,7 @@ disabled rule("Fly Manual Toggle ON")
 	}
 }
 
-disabled rule("Fly Manual Toggle OFF")
+rule("Fly Manual Toggle OFF")
 {
 	event
 	{
@@ -515,7 +515,7 @@ disabled rule("Fly Manual Toggle OFF")
 	}
 }
 
-disabled rule("Invisible Toggle")
+rule("Invisible Toggle")
 {
 	event
 	{
@@ -537,7 +537,7 @@ disabled rule("Invisible Toggle")
 	}
 }
 
-disabled rule("Invisible Toggle (WARN)")
+rule("Invisible Toggle (WARN)")
 {
 	event
 	{
@@ -559,7 +559,7 @@ disabled rule("Invisible Toggle (WARN)")
 	}
 }
 
-disabled rule("Camera Toggle")
+rule("Camera Toggle")
 {
 	event
 	{
@@ -583,7 +583,7 @@ disabled rule("Camera Toggle")
 	}
 }
 
-disabled rule("Fly Camera Move Toggle ON")
+rule("Fly Camera Move Toggle ON")
 {
 	event
 	{
@@ -604,7 +604,7 @@ disabled rule("Fly Camera Move Toggle ON")
 	}
 }
 
-disabled rule("Fly Camera Move Toggle OFF")
+rule("Fly Camera Move Toggle OFF")
 {
 	event
 	{
@@ -625,7 +625,7 @@ disabled rule("Fly Camera Move Toggle OFF")
 	}
 }
 
-disabled rule("Icon Toggle Left")
+rule("Icon Toggle Left")
 {
 	event
 	{
@@ -649,7 +649,7 @@ disabled rule("Icon Toggle Left")
 	}
 }
 
-disabled rule("Icon Toggle Right")
+rule("Icon Toggle Right")
 {
 	event
 	{
@@ -670,7 +670,7 @@ disabled rule("Icon Toggle Right")
 	}
 }
 
-disabled rule("Icon Toggle Off")
+rule("Icon Toggle Off")
 {
 	event
 	{
@@ -692,7 +692,7 @@ disabled rule("Icon Toggle Off")
 	}
 }
 
-disabled rule("Aura Toggle Up")
+rule("Aura Toggle Up")
 {
 	event
 	{
@@ -713,7 +713,7 @@ disabled rule("Aura Toggle Up")
 	}
 }
 
-disabled rule("Aura Toggle Down")
+rule("Aura Toggle Down")
 {
 	event
 	{
@@ -737,7 +737,7 @@ disabled rule("Aura Toggle Down")
 	}
 }
 
-disabled rule("Aura Toggle Off")
+rule("Aura Toggle Off")
 {
 	event
 	{
@@ -759,7 +759,7 @@ disabled rule("Aura Toggle Off")
 	}
 }
 
-disabled rule("Menu Toggle")
+rule("Menu Toggle")
 {
 	event
 	{
@@ -782,7 +782,7 @@ disabled rule("Menu Toggle")
 	}
 }
 
-disabled rule("HUD Toggle")
+rule("HUD Toggle")
 {
 	event
 	{
@@ -813,7 +813,7 @@ disabled rule("HUD Toggle")
 	}
 }
 
-rule("Operations")
+disabled rule("Operations")
 {
 	event
 	{
@@ -821,7 +821,7 @@ rule("Operations")
 	}
 }
 
-disabled rule("Chill Start")
+rule("Chill Start")
 {
 	event
 	{
@@ -849,7 +849,7 @@ disabled rule("Chill Start")
 	}
 }
 
-disabled rule("Chill Stop")
+rule("Chill Stop")
 {
 	event
 	{
@@ -875,7 +875,7 @@ disabled rule("Chill Stop")
 	}
 }
 
-disabled rule("Teleport")
+rule("Teleport")
 {
 	event
 	{
@@ -899,7 +899,7 @@ disabled rule("Teleport")
 	}
 }
 
-disabled rule("Hero Swap Start")
+rule("Hero Swap Start")
 {
 	event
 	{
@@ -924,7 +924,7 @@ disabled rule("Hero Swap Start")
 	}
 }
 
-disabled rule("Hero Swap Teleport")
+rule("Hero Swap Teleport")
 {
 	event
 	{
@@ -950,7 +950,7 @@ disabled rule("Hero Swap Teleport")
 	}
 }
 
-disabled rule("Sleep Start")
+rule("Sleep Start")
 {
 	event
 	{
@@ -962,24 +962,23 @@ disabled rule("Sleep Start")
 	conditions
 	{
 		Event Player.SLEEP == True;
+		Event Player.CHILL == True;
 	}
 
 	actions
 	{
-		If(!Event Player.CHILL);
-			Clear Status(Event Player, Phased Out);
-			Wait(0.250, Ignore Condition);
-			Small Message(Event Player, Custom String("Sleep: ON"));
-			Set Status(Event Player, Null, Knocked Down, 9999);
-			Wait(0.250, Ignore Condition);
-			If(!Event Player.CHILL);
-				Set Status(Event Player, Null, Phased Out, 9999);
-				Wait(0.250, Ignore Condition);
-				Heal(Event Player, Null, 10000);
+		Clear Status(Event Player, Phased Out);
+		Wait(0.250, Ignore Condition);
+		Small Message(Event Player, Custom String("Sleep: ON"));
+		Set Status(Event Player, Null, Knocked Down, 9999);
+		Wait(0.250, Ignore Condition);
+		Set Status(Event Player, Null, Phased Out, 9999);
+		Wait(0.250, Ignore Condition);
+		Heal(Event Player, Null, 10000);
 	}
 }
 
-disabled rule("Sleep Stop")
+rule("Sleep Stop")
 {
 	event
 	{
@@ -1000,7 +999,7 @@ disabled rule("Sleep Stop")
 	}
 }
 
-disabled rule("Fly Disable")
+rule("Fly Disable")
 {
 	event
 	{
@@ -1024,7 +1023,7 @@ disabled rule("Fly Disable")
 	}
 }
 
-disabled rule("Fly Automatic")
+rule("Fly Automatic")
 {
 	event
 	{
@@ -1047,7 +1046,7 @@ disabled rule("Fly Automatic")
 	}
 }
 
-disabled rule("Fly Manual Initialize")
+rule("Fly Manual Initialize")
 {
 	event
 	{
@@ -1071,7 +1070,7 @@ disabled rule("Fly Manual Initialize")
 	}
 }
 
-disabled rule("Fly Manual Move")
+rule("Fly Manual Move")
 {
 	event
 	{
@@ -1093,7 +1092,7 @@ disabled rule("Fly Manual Move")
 	}
 }
 
-disabled rule("Fly Manual Stay")
+rule("Fly Manual Stay")
 {
 	event
 	{
@@ -1115,7 +1114,7 @@ disabled rule("Fly Manual Stay")
 	}
 }
 
-disabled rule("Invisible Start")
+rule("Invisible Start")
 {
 	event
 	{
@@ -1141,7 +1140,7 @@ disabled rule("Invisible Start")
 	}
 }
 
-disabled rule("Invisible Stop")
+rule("Invisible Stop")
 {
 	event
 	{
@@ -1167,7 +1166,7 @@ disabled rule("Invisible Stop")
 	}
 }
 
-disabled rule("Camera Normal")
+rule("Camera Normal")
 {
 	event
 	{
@@ -1188,7 +1187,7 @@ disabled rule("Camera Normal")
 	}
 }
 
-disabled rule("Camera Close")
+rule("Camera Close")
 {
 	event
 	{
@@ -1210,7 +1209,7 @@ disabled rule("Camera Close")
 	}
 }
 
-disabled rule("Camera Far")
+rule("Camera Far")
 {
 	event
 	{
@@ -1232,7 +1231,7 @@ disabled rule("Camera Far")
 	}
 }
 
-disabled rule("Camera Selfie")
+rule("Camera Selfie")
 {
 	event
 	{
@@ -1254,7 +1253,7 @@ disabled rule("Camera Selfie")
 	}
 }
 
-disabled rule("Camera Fly Constructor")
+rule("Camera Fly Constructor")
 {
 	event
 	{
@@ -1282,7 +1281,7 @@ disabled rule("Camera Fly Constructor")
 	}
 }
 
-disabled rule("Camera Fly")
+rule("Camera Fly")
 {
 	event
 	{
@@ -1313,7 +1312,7 @@ disabled rule("Camera Fly")
 	}
 }
 
-disabled rule("Camera Fly Destructor")
+rule("Camera Fly Destructor")
 {
 	event
 	{
@@ -1334,7 +1333,7 @@ disabled rule("Camera Fly Destructor")
 	}
 }
 
-disabled rule("Menu Start")
+rule("Menu Start")
 {
 	event
 	{
@@ -1441,7 +1440,7 @@ disabled rule("Menu Start")
 	}
 }
 
-disabled rule("Menu Stop")
+rule("Menu Stop")
 {
 	event
 	{
@@ -1467,7 +1466,7 @@ disabled rule("Menu Stop")
 	}
 }
 
-disabled rule("HUD Start")
+rule("HUD Start")
 {
 	event
 	{
@@ -1514,7 +1513,7 @@ disabled rule("HUD Start")
 	}
 }
 
-disabled rule("HUD Stop")
+rule("HUD Stop")
 {
 	event
 	{
@@ -1541,7 +1540,7 @@ disabled rule("HUD Stop")
 	}
 }
 
-rule("HOST ONLY")
+disabled rule("HOST ONLY")
 {
 	event
 	{
@@ -1549,7 +1548,7 @@ rule("HOST ONLY")
 	}
 }
 
-disabled rule("Spawn Bot Toggle")
+rule("Spawn Bot Toggle")
 {
 	event
 	{
@@ -1573,7 +1572,7 @@ disabled rule("Spawn Bot Toggle")
 	}
 }
 
-disabled rule("Spawn Bot Start")
+rule("Spawn Bot Start")
 {
 	event
 	{
@@ -1598,7 +1597,7 @@ disabled rule("Spawn Bot Start")
 	}
 }
 
-disabled rule("Spawn Bot Stop")
+rule("Spawn Bot Stop")
 {
 	event
 	{
@@ -1618,7 +1617,7 @@ disabled rule("Spawn Bot Stop")
 	}
 }
 
-disabled rule("Bot Respawn")
+rule("Bot Respawn")
 {
 	event
 	{
@@ -1639,7 +1638,7 @@ disabled rule("Bot Respawn")
 	}
 }
 
-disabled rule("Bot Behaviour")
+rule("Bot Behaviour")
 {
 	event
 	{
@@ -1705,7 +1704,7 @@ disabled rule("Bot Behaviour")
 	}
 }
 
-disabled rule("Bot Hello")
+rule("Bot Hello")
 {
 	event
 	{
@@ -1727,7 +1726,7 @@ disabled rule("Bot Hello")
 	}
 }
 
-disabled rule("Bot Snap")
+rule("Bot Snap")
 {
 	event
 	{
@@ -1765,7 +1764,7 @@ disabled rule("Bot Snap")
 	}
 }
 
-disabled rule("Bot Snap - D.Va")
+rule("Bot Snap - D.Va")
 {
 	event
 	{
@@ -1804,7 +1803,7 @@ disabled rule("Bot Snap - D.Va")
 	}
 }
 
-disabled rule("Bot Snap - Baptiste")
+rule("Bot Snap - Baptiste")
 {
 	event
 	{
@@ -1843,7 +1842,7 @@ disabled rule("Bot Snap - Baptiste")
 	}
 }
 
-disabled rule("Slo Mo Request Toggle")
+rule("Slo Mo Request Toggle")
 {
 	event
 	{
@@ -1886,7 +1885,7 @@ disabled rule("Slo Mo Request Toggle")
 	}
 }
 
-disabled rule("Slo Mo Start")
+rule("Slo Mo Start")
 {
 	event
 	{
@@ -1905,7 +1904,7 @@ disabled rule("Slo Mo Start")
 	}
 }
 
-disabled rule("Slo Mo Stop")
+rule("Slo Mo Stop")
 {
 	event
 	{
@@ -1924,7 +1923,7 @@ disabled rule("Slo Mo Stop")
 	}
 }
 
-disabled rule("Slo Mo Request")
+rule("Slo Mo Request")
 {
 	event
 	{
@@ -1949,7 +1948,7 @@ disabled rule("Slo Mo Request")
 	}
 }
 
-disabled rule("Slo Mo Vote")
+rule("Slo Mo Vote")
 {
 	event
 	{
@@ -1972,7 +1971,7 @@ disabled rule("Slo Mo Vote")
 	}
 }
 
-disabled rule("Slo Mo Count Vote")
+rule("Slo Mo Count Vote")
 {
 	event
 	{
@@ -1996,7 +1995,7 @@ disabled rule("Slo Mo Count Vote")
 	}
 }
 
-disabled rule("Emote Sync Toggle")
+rule("Emote Sync Toggle")
 {
 	event
 	{
@@ -2050,7 +2049,7 @@ disabled rule("Emote Sync Toggle")
 	}
 }
 
-disabled rule("Emote Slot Left")
+rule("Emote Slot Left")
 {
 	event
 	{
@@ -2073,7 +2072,7 @@ disabled rule("Emote Slot Left")
 	}
 }
 
-disabled rule("Emote Slot Up")
+rule("Emote Slot Up")
 {
 	event
 	{
@@ -2096,7 +2095,7 @@ disabled rule("Emote Slot Up")
 	}
 }
 
-disabled rule("Emote Slot Right")
+rule("Emote Slot Right")
 {
 	event
 	{
@@ -2119,7 +2118,7 @@ disabled rule("Emote Slot Right")
 	}
 }
 
-disabled rule("Emote Slot Down")
+rule("Emote Slot Down")
 {
 	event
 	{
@@ -2142,7 +2141,7 @@ disabled rule("Emote Slot Down")
 	}
 }
 
-disabled rule("Emote Signal Transmit")
+rule("Emote Signal Transmit")
 {
 	event
 	{
@@ -2169,7 +2168,7 @@ disabled rule("Emote Signal Transmit")
 	}
 }
 
-disabled rule("Emote Signal Receive")
+rule("Emote Signal Receive")
 {
 	event
 	{
@@ -2198,7 +2197,7 @@ disabled rule("Emote Signal Receive")
 	}
 }
 
-rule("Icons")
+disabled rule("Icons")
 {
 	event
 	{
@@ -2206,7 +2205,7 @@ rule("Icons")
 	}
 }
 
-disabled rule("Icon Remove")
+rule("Icon Remove")
 {
 	event
 	{
@@ -2228,7 +2227,7 @@ disabled rule("Icon Remove")
 	}
 }
 
-disabled rule("Icon 01")
+rule("Icon 01")
 {
 	event
 	{
@@ -2251,7 +2250,7 @@ disabled rule("Icon 01")
 	}
 }
 
-disabled rule("Icon 02")
+rule("Icon 02")
 {
 	event
 	{
@@ -2274,7 +2273,7 @@ disabled rule("Icon 02")
 	}
 }
 
-disabled rule("Icon 03")
+rule("Icon 03")
 {
 	event
 	{
@@ -2297,7 +2296,7 @@ disabled rule("Icon 03")
 	}
 }
 
-disabled rule("Icon 04")
+rule("Icon 04")
 {
 	event
 	{
@@ -2320,7 +2319,7 @@ disabled rule("Icon 04")
 	}
 }
 
-disabled rule("Icon 05")
+rule("Icon 05")
 {
 	event
 	{
@@ -2343,7 +2342,7 @@ disabled rule("Icon 05")
 	}
 }
 
-disabled rule("Icon 06")
+rule("Icon 06")
 {
 	event
 	{
@@ -2366,7 +2365,7 @@ disabled rule("Icon 06")
 	}
 }
 
-disabled rule("Icon 07")
+rule("Icon 07")
 {
 	event
 	{
@@ -2389,7 +2388,7 @@ disabled rule("Icon 07")
 	}
 }
 
-disabled rule("Icon 08")
+rule("Icon 08")
 {
 	event
 	{
@@ -2412,7 +2411,7 @@ disabled rule("Icon 08")
 	}
 }
 
-disabled rule("Icon 09")
+rule("Icon 09")
 {
 	event
 	{
@@ -2435,7 +2434,7 @@ disabled rule("Icon 09")
 	}
 }
 
-disabled rule("Icon 10")
+rule("Icon 10")
 {
 	event
 	{
@@ -2458,7 +2457,7 @@ disabled rule("Icon 10")
 	}
 }
 
-disabled rule("Icon 11")
+rule("Icon 11")
 {
 	event
 	{
@@ -2481,7 +2480,7 @@ disabled rule("Icon 11")
 	}
 }
 
-disabled rule("Icon 12")
+rule("Icon 12")
 {
 	event
 	{
@@ -2504,7 +2503,7 @@ disabled rule("Icon 12")
 	}
 }
 
-disabled rule("Icon 13")
+rule("Icon 13")
 {
 	event
 	{
@@ -2527,7 +2526,7 @@ disabled rule("Icon 13")
 	}
 }
 
-disabled rule("Icon 14")
+rule("Icon 14")
 {
 	event
 	{
@@ -2550,7 +2549,7 @@ disabled rule("Icon 14")
 	}
 }
 
-disabled rule("Icon 15")
+rule("Icon 15")
 {
 	event
 	{
@@ -2573,7 +2572,7 @@ disabled rule("Icon 15")
 	}
 }
 
-disabled rule("Icon 16")
+rule("Icon 16")
 {
 	event
 	{
@@ -2596,7 +2595,7 @@ disabled rule("Icon 16")
 	}
 }
 
-disabled rule("Icon 17")
+rule("Icon 17")
 {
 	event
 	{
@@ -2619,7 +2618,7 @@ disabled rule("Icon 17")
 	}
 }
 
-disabled rule("Icon 18")
+rule("Icon 18")
 {
 	event
 	{
@@ -2642,7 +2641,7 @@ disabled rule("Icon 18")
 	}
 }
 
-disabled rule("Icon 19")
+rule("Icon 19")
 {
 	event
 	{
@@ -2665,7 +2664,7 @@ disabled rule("Icon 19")
 	}
 }
 
-disabled rule("Icon 20")
+rule("Icon 20")
 {
 	event
 	{
@@ -2688,7 +2687,7 @@ disabled rule("Icon 20")
 	}
 }
 
-disabled rule("Icon 21")
+rule("Icon 21")
 {
 	event
 	{
@@ -2711,7 +2710,7 @@ disabled rule("Icon 21")
 	}
 }
 
-disabled rule("Icon 22")
+rule("Icon 22")
 {
 	event
 	{
@@ -2734,7 +2733,7 @@ disabled rule("Icon 22")
 	}
 }
 
-disabled rule("Icon 23")
+rule("Icon 23")
 {
 	event
 	{
@@ -2757,7 +2756,7 @@ disabled rule("Icon 23")
 	}
 }
 
-disabled rule("Icon 24")
+rule("Icon 24")
 {
 	event
 	{
@@ -2780,7 +2779,7 @@ disabled rule("Icon 24")
 	}
 }
 
-disabled rule("Icon 25")
+rule("Icon 25")
 {
 	event
 	{
@@ -2803,7 +2802,7 @@ disabled rule("Icon 25")
 	}
 }
 
-disabled rule("Icon 26")
+rule("Icon 26")
 {
 	event
 	{
@@ -2826,7 +2825,7 @@ disabled rule("Icon 26")
 	}
 }
 
-disabled rule("Icon 27")
+rule("Icon 27")
 {
 	event
 	{
@@ -2849,7 +2848,7 @@ disabled rule("Icon 27")
 	}
 }
 
-disabled rule("Icon 28")
+rule("Icon 28")
 {
 	event
 	{
@@ -2872,7 +2871,7 @@ disabled rule("Icon 28")
 	}
 }
 
-disabled rule("Icon 29")
+rule("Icon 29")
 {
 	event
 	{
@@ -2895,7 +2894,7 @@ disabled rule("Icon 29")
 	}
 }
 
-disabled rule("Icon 30")
+rule("Icon 30")
 {
 	event
 	{
@@ -2918,7 +2917,7 @@ disabled rule("Icon 30")
 	}
 }
 
-disabled rule("Icon 31")
+rule("Icon 31")
 {
 	event
 	{
@@ -2941,7 +2940,7 @@ disabled rule("Icon 31")
 	}
 }
 
-disabled rule("Icon 32")
+rule("Icon 32")
 {
 	event
 	{
@@ -2964,7 +2963,7 @@ disabled rule("Icon 32")
 	}
 }
 
-disabled rule("Icon 33")
+rule("Icon 33")
 {
 	event
 	{
@@ -2987,7 +2986,7 @@ disabled rule("Icon 33")
 	}
 }
 
-disabled rule("Icon 34")
+rule("Icon 34")
 {
 	event
 	{
@@ -3010,7 +3009,7 @@ disabled rule("Icon 34")
 	}
 }
 
-disabled rule("Icon 35")
+rule("Icon 35")
 {
 	event
 	{
@@ -3033,7 +3032,7 @@ disabled rule("Icon 35")
 	}
 }
 
-disabled rule("Icon 36")
+rule("Icon 36")
 {
 	event
 	{
@@ -3056,7 +3055,7 @@ disabled rule("Icon 36")
 	}
 }
 
-rule("Auras")
+disabled rule("Auras")
 {
 	event
 	{
@@ -3064,7 +3063,7 @@ rule("Auras")
 	}
 }
 
-disabled rule("Aura Remove")
+rule("Aura Remove")
 {
 	event
 	{
@@ -3087,7 +3086,7 @@ disabled rule("Aura Remove")
 	}
 }
 
-disabled rule("Aura 01")
+rule("Aura 01")
 {
 	event
 	{
@@ -3110,7 +3109,7 @@ disabled rule("Aura 01")
 	}
 }
 
-disabled rule("Aura 02")
+rule("Aura 02")
 {
 	event
 	{
@@ -3133,7 +3132,7 @@ disabled rule("Aura 02")
 	}
 }
 
-disabled rule("Aura 03")
+rule("Aura 03")
 {
 	event
 	{
@@ -3156,7 +3155,7 @@ disabled rule("Aura 03")
 	}
 }
 
-disabled rule("Aura 04")
+rule("Aura 04")
 {
 	event
 	{
@@ -3179,7 +3178,7 @@ disabled rule("Aura 04")
 	}
 }
 
-disabled rule("Aura 05")
+rule("Aura 05")
 {
 	event
 	{
@@ -3202,7 +3201,7 @@ disabled rule("Aura 05")
 	}
 }
 
-disabled rule("Aura 06")
+rule("Aura 06")
 {
 	event
 	{
@@ -3225,7 +3224,7 @@ disabled rule("Aura 06")
 	}
 }
 
-disabled rule("Aura 07")
+rule("Aura 07")
 {
 	event
 	{
@@ -3248,7 +3247,7 @@ disabled rule("Aura 07")
 	}
 }
 
-disabled rule("Aura 08")
+rule("Aura 08")
 {
 	event
 	{
@@ -3271,7 +3270,7 @@ disabled rule("Aura 08")
 	}
 }
 
-disabled rule("Aura 09")
+rule("Aura 09")
 {
 	event
 	{
@@ -3294,7 +3293,7 @@ disabled rule("Aura 09")
 	}
 }
 
-disabled rule("Aura 10")
+rule("Aura 10")
 {
 	event
 	{
@@ -3317,7 +3316,7 @@ disabled rule("Aura 10")
 	}
 }
 
-disabled rule("Aura 11")
+rule("Aura 11")
 {
 	event
 	{
@@ -3340,7 +3339,7 @@ disabled rule("Aura 11")
 	}
 }
 
-rule("Old Code [For Reference Purpose]")
+disabled rule("Old Code [For Reference Purpose]")
 {
 	event
 	{
@@ -3348,7 +3347,7 @@ rule("Old Code [For Reference Purpose]")
 	}
 }
 
-rule("HUD Toggle")
+disabled rule("HUD Toggle")
 {
 	event
 	{
@@ -3369,7 +3368,7 @@ rule("HUD Toggle")
 	}
 }
 
-rule("HUD Start")
+disabled rule("HUD Start")
 {
 	event
 	{
@@ -3481,7 +3480,7 @@ rule("HUD Start")
 	}
 }
 
-rule("HUD Stop")
+disabled rule("HUD Stop")
 {
 	event
 	{
@@ -3506,7 +3505,7 @@ rule("HUD Stop")
 	}
 }
 
-rule("New MENU Start")
+disabled rule("New MENU Start")
 {
 	event
 	{
@@ -3578,7 +3577,7 @@ rule("New MENU Start")
 	}
 }
 
-rule("New HUD Start")
+disabled rule("New HUD Start")
 {
 	event
 	{
