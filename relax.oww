@@ -20,6 +20,8 @@ variables
 		16: EMOTE_SYNC
 		17: EMOTE_SIGNAL
 		18: EMOTE_SYNC_ENABLE
+		19: TELEPORT_SCALE
+		20: CHILL_ON_FIRST_SPAWN
 		21: VERSION
 
 	player:
@@ -68,7 +70,7 @@ disabled rule("GLOBAL")
 	}
 }
 
-rule("init")
+rule("Workshop Variables Override")
 {
 	event
 	{
@@ -78,10 +80,25 @@ rule("init")
 	actions
 	{
 		"Time is in seconds."
-		Global.MATCH_TIME = 1800;
-		Global.SLO_MO_ENABLE = False;
-		Global.CUSTOM_BOT_ENABLE = False;
-		Global.EMOTE_SYNC_ENABLE = False;
+		Global.MATCH_TIME = Workshop Setting Integer(Custom String("Global"), Custom String("Match Time (in Seconds)"), 1800, 300, 3600);
+		Global.CHILL_ON_FIRST_SPAWN = Workshop Setting Toggle(Custom String("Global"), Custom String("Chill on spawn"), True);
+		Global.SLO_MO_ENABLE = Workshop Setting Toggle(Custom String("Plugins"), Custom String("Slo Mo"), False);
+		Global.CUSTOM_BOT_ENABLE = Workshop Setting Toggle(Custom String("Plugins"), Custom String("Custom Bot"), False);
+		Global.EMOTE_SYNC_ENABLE = Workshop Setting Toggle(Custom String("Plugins"), Custom String("Emote Sync"), False);
+		Global.TELEPORT_SCALE = Workshop Setting Integer(Custom String("Global"), Custom String("Teleport Scale"), 15, 1, 100);
+	}
+}
+
+rule("init")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	actions
+	{
+		Set Match Time(Global.MATCH_TIME);
 		Global.CUSTOM_BOT_1 = Hero(Mercy);
 		Global.CUSTOM_BOT_2 = Hero(Mercy);
 		Global.BOT_SPAWN = False;
@@ -90,12 +107,11 @@ rule("init")
 		Global.TOTAL_AURA = 11;
 		Global.AURA_SIZE = 1;
 		Global.TOTAL_FLY = 3;
-		Set Match Time(Global.MATCH_TIME);
 		Global.SLO_MO = False;
 		Global.SLO_MO_REQUEST = False;
 		Global.SLO_MO_LOBBY_COUNT = 0;
 		Global.SLO_MO_COUNT_VOTE = False;
-		Global.VERSION = Custom String("1.6.3");
+		Global.VERSION = Custom String("1.6.4");
 		Wait(Global.MATCH_TIME / 2, Ignore Condition);
 		Big Message(All Players(All Teams), Custom String("hydrate yourself chat..."));
 		Wait(4, Ignore Condition);
@@ -208,7 +224,8 @@ rule("init (first spawn)")
 		Event Player.DISPLAY_HUD = True;
 		Event Player.DISPLAY_MENU = False;
 		Event Player.FIRST_SPAWN = True;
-		Event Player.CHILL = True;
+		If(Global.CHILL_ON_FIRST_SPAWN);
+			Event Player.CHILL = True;
 	}
 }
 
@@ -892,7 +909,7 @@ rule("Teleport")
 	actions
 	{
 		Event Player.FACING_DIRECTION = Facing Direction Of(Event Player);
-		Teleport(Event Player, Position Of(Event Player) + Facing Direction Of(Event Player) * 15);
+		Teleport(Event Player, Position Of(Event Player) + Facing Direction Of(Event Player) * Global.TELEPORT_SCALE);
 		Set Facing(Event Player, Event Player.FACING_DIRECTION, To World);
 		Play Effect(All Players(All Teams), Good Pickup Effect, Aqua, Event Player, 100);
 		Event Player.TELEPORT = False;
