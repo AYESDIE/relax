@@ -17,7 +17,10 @@ variables
 		13: SLO_MO_VOTES
 		14: SLO_MO_ENABLE
 		15: CUSTOM_BOT_ENABLE
+		16: HUGS
+		17: GREETS
 		21: VERSION
+		25: GITHUB_DISCORD
 
 	player:
 		0: SLEEP
@@ -53,6 +56,8 @@ variables
 		30: HUD_GUARD
 		31: MENU_GUARD
 		32: MENU_ICON
+		33: HUGGED
+		34: WAVED
 }
 
 disabled rule("GLOBAL")
@@ -60,6 +65,22 @@ disabled rule("GLOBAL")
 	event
 	{
 		Ongoing - Global;
+	}
+}
+
+rule("Workshop Variables Override")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	actions
+	{
+		"Time is in seconds."
+		Global.MATCH_TIME = Workshop Setting Integer(Custom String("Global"), Custom String("Match Time (in Seconds)"), 1800, 300, 3600);
+		Global.SLO_MO_ENABLE = Workshop Setting Toggle(Custom String("Plugins"), Custom String("Slo Mo"), False);
+		Global.CUSTOM_BOT_ENABLE = Workshop Setting Toggle(Custom String("Plugins"), Custom String("Custom Bot"), False);
 	}
 }
 
@@ -89,7 +110,19 @@ rule("init")
 		Global.SLO_MO_REQUEST = False;
 		Global.SLO_MO_LOBBY_COUNT = 0;
 		Global.SLO_MO_COUNT_VOTE = False;
-		Global.VERSION = Custom String("1.5.0");
+		Global.VERSION = Custom String("1.5.1");
+		Global.HUGS = Custom String("(っ´▽｀)っ");
+		Modify Global Variable(HUGS, Append To Array, Custom String("（っ・∀・）っ"));
+		Modify Global Variable(HUGS, Append To Array, Custom String("(> ^_^ )>"));
+		Modify Global Variable(HUGS, Append To Array, Custom String("(⊃｡•́‿•̀｡)⊃"));
+		Modify Global Variable(HUGS, Append To Array, Custom String("(づ｡u‿‿u｡)づ"));
+		Modify Global Variable(HUGS, Append To Array, Custom String("(.づσ σ)づ."));
+		Global.GREETS = Custom String("(*・ω・)ﾉ");
+		Modify Global Variable(GREETS, Append To Array, Custom String("【*• ‿ •*】Hi!"));
+		Modify Global Variable(GREETS, Append To Array, Custom String("(⌒ω⌒)ﾉ"));
+		Modify Global Variable(GREETS, Append To Array, Custom String("(o´▽`o)ﾉ"));
+		Modify Global Variable(GREETS, Append To Array, Custom String("ヾ(・Θ・)ノ〃"));
+		Modify Global Variable(GREETS, Append To Array, Custom String("(人^▽') ～♡"));
 	}
 }
 
@@ -425,6 +458,9 @@ rule("Fly Toggle")
 
 	actions
 	{
+		Skip If(Event Player.FLY_STATE != 0, 2);
+		Wait(4, Abort When False);
+		Small Message(Event Player, Custom String("You are about to start Fly Mode..."));
 		Wait(1, Abort When False);
 		Event Player.FLY_STATE = (Event Player.FLY_STATE + 1) % Global.TOTAL_FLY;
 		Wait(1, Abort When False);
@@ -1470,12 +1506,11 @@ rule("HUD Start")
 			Default Visibility);
 		Modify Player Variable(Event Player, HUD_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Custom String("A script for chill server by AYESDIE#1904."), Right, 0.100, White, White,
+		Create HUD Text(Event Player, Null, Null, Custom String("A script for chill server by AYESDIE#1904"), Right, 0.100, White, White,
 			White, None, Default Visibility);
 		Modify Player Variable(Event Player, HUD_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Custom String("Join the Discord server: discord.gg/NXHN5GG"), Right, 0.200, White, White,
-			White, None, Default Visibility);
+		Create HUD Text(Event Player, Null, Null, Global.GITHUB_DISCORD, Right, 0.200, White, White, White, String, Default Visibility);
 		Modify Player Variable(Event Player, HUD_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Null, Custom String("Chill: Crouch + Emote"), Right, 0.300, White, White, White, None,
@@ -2026,7 +2061,7 @@ rule("Icon 01")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Arrow: Down, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Arrow: Down)));
 	}
 }
 
@@ -2049,7 +2084,7 @@ rule("Icon 02")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Arrow: Left, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Arrow: Left)));
 	}
 }
 
@@ -2072,7 +2107,7 @@ rule("Icon 03")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Arrow: Right, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Arrow: Right)));
 	}
 }
 
@@ -2095,7 +2130,7 @@ rule("Icon 04")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Arrow: Up, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Arrow: Up)));
 	}
 }
 
@@ -2118,7 +2153,7 @@ rule("Icon 05")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Asterisk, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Asterisk)));
 	}
 }
 
@@ -2141,7 +2176,7 @@ rule("Icon 06")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Bolt, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Bolt)));
 	}
 }
 
@@ -2164,7 +2199,7 @@ rule("Icon 07")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Checkmark, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Checkmark)));
 	}
 }
 
@@ -2187,7 +2222,7 @@ rule("Icon 08")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Circle, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Circle)));
 	}
 }
 
@@ -2210,7 +2245,7 @@ rule("Icon 09")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Club, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Club)));
 	}
 }
 
@@ -2233,7 +2268,7 @@ rule("Icon 10")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Diamond, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Diamond)));
 	}
 }
 
@@ -2256,7 +2291,7 @@ rule("Icon 11")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Dizzy, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Dizzy)));
 	}
 }
 
@@ -2279,7 +2314,7 @@ rule("Icon 12")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Exclamation Mark, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Exclamation Mark)));
 	}
 }
 
@@ -2302,7 +2337,7 @@ rule("Icon 13")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Eye, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Eye)));
 	}
 }
 
@@ -2325,7 +2360,7 @@ rule("Icon 14")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Fire, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Fire)));
 	}
 }
 
@@ -2348,7 +2383,7 @@ rule("Icon 15")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Flag, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Flag)));
 	}
 }
 
@@ -2371,7 +2406,7 @@ rule("Icon 16")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Halo, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Halo)));
 	}
 }
 
@@ -2394,7 +2429,7 @@ rule("Icon 17")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Happy, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Happy)));
 	}
 }
 
@@ -2417,7 +2452,7 @@ rule("Icon 18")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Heart, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Heart)));
 	}
 }
 
@@ -2440,7 +2475,7 @@ rule("Icon 19")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Moon, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Moon)));
 	}
 }
 
@@ -2463,7 +2498,7 @@ rule("Icon 20")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, No, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(No)));
 	}
 }
 
@@ -2486,7 +2521,7 @@ rule("Icon 21")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Plus, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Plus)));
 	}
 }
 
@@ -2509,7 +2544,7 @@ rule("Icon 22")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Poison, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Poison)));
 	}
 }
 
@@ -2532,7 +2567,7 @@ rule("Icon 23")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Poison 2, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Poison 2)));
 	}
 }
 
@@ -2555,7 +2590,7 @@ rule("Icon 24")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Question Mark, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Question Mark)));
 	}
 }
 
@@ -2578,7 +2613,7 @@ rule("Icon 25")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Radioactive, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Radioactive)));
 	}
 }
 
@@ -2601,7 +2636,7 @@ rule("Icon 26")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Recycle, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Recycle)));
 	}
 }
 
@@ -2624,7 +2659,7 @@ rule("Icon 27")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Ring Thick, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Ring Thick)));
 	}
 }
 
@@ -2647,7 +2682,7 @@ rule("Icon 28")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Ring Thin, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Ring Thin)));
 	}
 }
 
@@ -2670,7 +2705,7 @@ rule("Icon 29")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Sad, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Sad)));
 	}
 }
 
@@ -2693,7 +2728,7 @@ rule("Icon 30")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Skull, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Skull)));
 	}
 }
 
@@ -2716,7 +2751,7 @@ rule("Icon 31")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Spade, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Spade)));
 	}
 }
 
@@ -2739,7 +2774,7 @@ rule("Icon 32")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Spiral, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Spiral)));
 	}
 }
 
@@ -2762,7 +2797,7 @@ rule("Icon 33")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Stop, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Stop)));
 	}
 }
 
@@ -2785,7 +2820,7 @@ rule("Icon 34")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Trashcan, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Trashcan)));
 	}
 }
 
@@ -2808,7 +2843,7 @@ rule("Icon 35")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, Warning, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Warning)));
 	}
 }
 
@@ -2831,7 +2866,7 @@ rule("Icon 36")
 		Destroy Icon(Event Player.ICON_ENTITY);
 		Create Icon(All Players(All Teams), Event Player, X, Visible To and Position, White, True);
 		Event Player.ICON_ENTITY = Last Created Entity;
-		Small Message(Event Player, Custom String("ICON: {0}", Event Player.ICON_NUMBER));
+		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(X)));
 	}
 }
 
@@ -2884,8 +2919,8 @@ rule("Aura 01")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, White, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} White", Event Player.AURA_NUMBER));
 	}
 }
 
@@ -2907,8 +2942,8 @@ rule("Aura 02")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Yellow, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Yellow", Event Player.AURA_NUMBER));
 	}
 }
 
@@ -2930,8 +2965,8 @@ rule("Aura 03")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Green, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Green", Event Player.AURA_NUMBER));
 	}
 }
 
@@ -2953,8 +2988,8 @@ rule("Aura 04")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Purple, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Purple", Event Player.AURA_NUMBER));
 	}
 }
 
@@ -2976,8 +3011,8 @@ rule("Aura 05")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Red, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Red", Event Player.AURA_NUMBER));
 	}
 }
 
@@ -2999,8 +3034,8 @@ rule("Aura 06")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Blue, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Blue", Event Player.AURA_NUMBER));
 	}
 }
 
@@ -3022,8 +3057,8 @@ rule("Aura 07")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Aqua, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Aqua", Event Player.AURA_NUMBER));
 	}
 }
 
@@ -3045,8 +3080,8 @@ rule("Aura 08")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Orange, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Orange", Event Player.AURA_NUMBER));
 	}
 }
 
@@ -3068,8 +3103,8 @@ rule("Aura 09")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Sky Blue, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Sky Blue", Event Player.AURA_NUMBER));
 	}
 }
 
@@ -3091,8 +3126,8 @@ rule("Aura 10")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Turquoise, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Turquoise", Event Player.AURA_NUMBER));
 	}
 }
 
@@ -3114,8 +3149,223 @@ rule("Aura 11")
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
 		Create Effect(All Players(All Teams), Sparkles, Lime Green, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
-		Small Message(Event Player, Custom String("Aura: {0}", Event Player.AURA_NUMBER));
 		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Lime Green", Event Player.AURA_NUMBER));
+	}
+}
+
+disabled rule("UWU Stuff")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+}
+
+rule("Hug")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Crouch) == True;
+		Is Communicating(Event Player, Thanks) == True;
+	}
+
+	actions
+	{
+		Event Player.HUGGED = Player Closest To Reticle(Event Player, All Teams);
+		Skip If(Distance Between(Position Of(Event Player), Position Of(Event Player.HUGGED)) > 5, 1);
+		Small Message(All Players(All Teams), Custom String("{0} {2} {1} ", Custom String("{1} {0}", Event Player, Hero Icon String(
+			Hero Of(Event Player))), Custom String("{0} {1} ", Event Player.HUGGED, Hero Icon String(Hero Of(Event Player.HUGGED))),
+			Random Value In Array(Global.HUGS)));
+		Wait(0.250, Ignore Condition);
+		Event Player.HUGGED = Null;
+		Wait(0.500, Ignore Condition);
+	}
+}
+
+rule("Wave")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Crouch) == True;
+		Is Communicating(Event Player, Hello) == True;
+	}
+
+	actions
+	{
+		Event Player.WAVED = Player Closest To Reticle(Event Player, All Teams);
+		Skip If(Distance Between(Position Of(Event Player), Position Of(Event Player.WAVED)) > 5, 1);
+		Small Message(All Players(All Teams), Custom String("{0} {2} {1} ", Custom String("{1} {0}", Event Player, Hero Icon String(
+			Hero Of(Event Player))), Custom String("{0} {1} ", Event Player.WAVED, Hero Icon String(Hero Of(Event Player.WAVED))),
+			Random Value In Array(Global.GREETS)));
+		Wait(0.250, Ignore Condition);
+		Event Player.WAVED = Null;
+		Wait(0.500, Ignore Condition);
+	}
+}
+
+disabled rule("Reset Cooldowns")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+}
+
+rule("Ability 1")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.CHILL == True;
+		Ability Cooldown(Event Player, Button(Ability 1)) > 5;
+	}
+
+	actions
+	{
+		Set Ability Cooldown(Event Player, Button(Ability 1), 5);
+	}
+}
+
+rule("Ability 2")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.CHILL == True;
+		Ability Cooldown(Event Player, Button(Ability 2)) > 5;
+	}
+
+	actions
+	{
+		Set Ability Cooldown(Event Player, Button(Ability 2), 5);
+	}
+}
+
+rule("Secondary Fire")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.CHILL == True;
+		Ability Cooldown(Event Player, Button(Secondary Fire)) > 5;
+	}
+
+	actions
+	{
+		Set Ability Cooldown(Event Player, Button(Secondary Fire), 5);
+	}
+}
+
+rule("Primary Fire")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.CHILL == True;
+		Ability Cooldown(Event Player, Button(Primary Fire)) > 5;
+	}
+
+	actions
+	{
+		Set Ability Cooldown(Event Player, Button(Primary Fire), 5);
+	}
+}
+
+rule("Crouch")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.CHILL == True;
+		Ability Cooldown(Event Player, Button(Crouch)) > 5;
+	}
+
+	actions
+	{
+		Set Ability Cooldown(Event Player, Button(Crouch), 5);
+	}
+}
+
+rule("Jump")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.CHILL == True;
+		Ability Cooldown(Event Player, Button(Jump)) > 5;
+	}
+
+	actions
+	{
+		Set Ability Cooldown(Event Player, Button(Jump), 5);
+	}
+}
+
+rule("Loop OP (HUD Github)")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	actions
+	{
+		Global.GITHUB_DISCORD = Custom String("Join the Discord server: discord.gg/NXHN5GG");
+		Wait(120, Ignore Condition);
+		Global.GITHUB_DISCORD = Custom String("Follow the development: github.com/AYESDIE/relax");
+		Wait(120, Ignore Condition);
+		Loop;
 	}
 }
 
@@ -3392,5 +3642,45 @@ disabled rule("New HUD Start")
 			"----------------------------------- {0} -----------------------------------", Event Player.MENU_ARRAY), Right, 13, White,
 			White, White, String, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
+	}
+}
+
+disabled rule("Ability HUD")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	actions
+	{
+		Create HUD Text(Event Player, Null, Null, Custom String("Ability 1: {0} Ability 2: {1} RMB: {2}", Ability Cooldown(Event Player,
+			Button(Ability 1)), Ability Cooldown(Event Player, Button(Ability 2)), Ability Cooldown(Event Player, Button(Secondary Fire))),
+			Top, 0, White, White, White, Visible To and String, Default Visibility);
+		disabled Set Ability Cooldown(Event Player, Button(Primary Fire), 0);
+	}
+}
+
+disabled rule("Set Max Ammo")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Zarya);
+		Event Player.CHILL == True;
+	}
+
+	actions
+	{
+		Set Max Ammo(Event Player, 0, 1000);
+		Set Ammo(Event Player, 0, 0);
 	}
 }
