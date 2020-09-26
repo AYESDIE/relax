@@ -19,6 +19,7 @@ variables
 		15: CUSTOM_BOT_ENABLE
 		16: HUGS
 		17: GREETS
+		18: BONKS
 		21: VERSION
 		25: GITHUB_DISCORD
 
@@ -58,6 +59,9 @@ variables
 		32: MENU_ICON
 		33: HUGGED
 		34: WAVED
+		35: BONKED
+		36: SCALE_SIZE
+		37: SCALING
 }
 
 disabled rule("GLOBAL")
@@ -93,10 +97,6 @@ rule("init")
 
 	actions
 	{
-		"Time is in seconds."
-		Global.MATCH_TIME = 1800;
-		Global.SLO_MO_ENABLE = False;
-		Global.CUSTOM_BOT_ENABLE = False;
 		Global.CUSTOM_BOT_1 = Hero(Mercy);
 		Global.CUSTOM_BOT_2 = Hero(Mercy);
 		Global.BOT_SPAWN = False;
@@ -110,19 +110,27 @@ rule("init")
 		Global.SLO_MO_REQUEST = False;
 		Global.SLO_MO_LOBBY_COUNT = 0;
 		Global.SLO_MO_COUNT_VOTE = False;
-		Global.VERSION = Custom String("1.5.1");
+		Global.VERSION = Custom String("1.5.2 (Unstable)");
 		Global.HUGS = Custom String("(っ´▽｀)っ");
 		Modify Global Variable(HUGS, Append To Array, Custom String("（っ・∀・）っ"));
 		Modify Global Variable(HUGS, Append To Array, Custom String("(> ^_^ )>"));
 		Modify Global Variable(HUGS, Append To Array, Custom String("(⊃｡•́‿•̀｡)⊃"));
 		Modify Global Variable(HUGS, Append To Array, Custom String("(づ｡u‿‿u｡)づ"));
 		Modify Global Variable(HUGS, Append To Array, Custom String("(.づσ σ)づ."));
+		Modify Global Variable(HUGS, Append To Array, Custom String("ヾ(￣ー￣(^ω^*)ゝ"));
+		Modify Global Variable(HUGS, Append To Array, Custom String("（づ￣3￣）づ"));
 		Global.GREETS = Custom String("(*・ω・)ﾉ");
 		Modify Global Variable(GREETS, Append To Array, Custom String("【*• ‿ •*】Hi!"));
 		Modify Global Variable(GREETS, Append To Array, Custom String("(⌒ω⌒)ﾉ"));
 		Modify Global Variable(GREETS, Append To Array, Custom String("(o´▽`o)ﾉ"));
 		Modify Global Variable(GREETS, Append To Array, Custom String("ヾ(・Θ・)ノ〃"));
+		Modify Global Variable(GREETS, Append To Array, Custom String("ヾ(•ω•`)o"));
 		Modify Global Variable(GREETS, Append To Array, Custom String("(人^▽') ～♡"));
+		Global.BONKS = Custom String("<( ‵□′)───C＜─___-)||");
+		Modify Global Variable(BONKS, Append To Array, Custom String("(ｏ ‵-′)ノ”(ノ﹏<。)"));
+		Modify Global Variable(BONKS, Append To Array, Custom String("<( ‵□′)>───Ｃε(┬﹏┬)3"));
+		Modify Global Variable(BONKS, Append To Array, Custom String("<( ￣^￣)(θ(θ☆( >_<"));
+		Modify Global Variable(BONKS, Append To Array, Custom String("(*`0´)θ☆(メ°皿°)ﾉ"));
 	}
 }
 
@@ -204,6 +212,7 @@ rule("init (join)")
 		Event Player.HUD_GUARD = False;
 		Event Player.MENU_GUARD = False;
 		Event Player.MENU_ICON = Custom String("\\/");
+		Event Player.SCALE_SIZE = 3;
 	}
 }
 
@@ -649,6 +658,107 @@ rule("Fly Camera Move Toggle OFF")
 	}
 }
 
+rule("Size Toggle UP")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.CHILL == True;
+		Event Player.SCALING == False;
+		Is Button Held(Event Player, Ability 2) == True;
+		Is Button Held(Event Player, Primary Fire) == False;
+		Is Button Held(Event Player, Secondary Fire) == True;
+	}
+
+	actions
+	{
+		Event Player.SCALE_SIZE += 1;
+		Event Player.SCALE_SIZE %= 20;
+		Event Player.SCALING = True;
+	}
+}
+
+rule("Size Toggle DOWN")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.CHILL == True;
+		Event Player.SCALING == False;
+		Is Button Held(Event Player, Ability 2) == True;
+		Is Button Held(Event Player, Primary Fire) == True;
+		Is Button Held(Event Player, Secondary Fire) == False;
+	}
+
+	actions
+	{
+		Event Player.SCALE_SIZE -= 1;
+		Skip If(Event Player.SCALE_SIZE >= 0, 1);
+		Event Player.SCALE_SIZE = 19;
+		Event Player.SCALING = True;
+	}
+}
+
+rule("Size Toggle UP (Chill WARN)")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.CHILL == False;
+		Event Player.SCALING == False;
+		Is Button Held(Event Player, Ability 2) == True;
+		Is Button Held(Event Player, Primary Fire) == False;
+		Is Button Held(Event Player, Secondary Fire) == True;
+	}
+
+	actions
+	{
+		Small Message(Event Player, Custom String("Enable Chill mode to change size..."));
+	}
+}
+
+rule("Size Toggle DOWN (Chill WARN)")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.CHILL == False;
+		Event Player.SCALING == False;
+		Is Button Held(Event Player, Ability 2) == True;
+		Is Button Held(Event Player, Primary Fire) == True;
+		Is Button Held(Event Player, Secondary Fire) == False;
+	}
+
+	actions
+	{
+		Small Message(Event Player, Custom String("Enable Chill mode to change size..."));
+	}
+}
+
 rule("Icon Toggle Left")
 {
 	event
@@ -894,6 +1004,12 @@ rule("Chill Stop")
 		Set Max Health(Event Player, 100);
 		Set Damage Dealt(Event Player, 100);
 		Set Healing Received(Event Player, 100);
+		Stop Scaling Player(Event Player);
+		Stop Modifying Hero Voice Lines(Event Player);
+		Enable Movement Collision With Environment(Event Player);
+		Set Move Speed(Event Player, 100);
+		Set Jump Vertical Speed(Event Player, 100);
+		Event Player.SCALE_SIZE = 3;
 		Wait(0.250, Ignore Condition);
 		Play Effect(All Players(All Teams), Good Pickup Effect, Red, Event Player, 100);
 	}
@@ -916,7 +1032,7 @@ rule("Teleport")
 	actions
 	{
 		Event Player.FACING_DIRECTION = Facing Direction Of(Event Player);
-		Teleport(Event Player, Position Of(Event Player) + Facing Direction Of(Event Player) * 15);
+		Teleport(Event Player, Position Of(Event Player) + Facing Direction Of(Event Player) * (Event Player.SCALE_SIZE + 1) * (15 / 4));
 		Set Facing(Event Player, Event Player.FACING_DIRECTION, To World);
 		Play Effect(All Players(All Teams), Good Pickup Effect, Aqua, Event Player, 100);
 		Event Player.TELEPORT = False;
@@ -1041,7 +1157,7 @@ rule("Fly Disable")
 	actions
 	{
 		Stop Accelerating(Event Player);
-		Set Move Speed(Event Player, 100);
+		Set Move Speed(Event Player, (Event Player.SCALE_SIZE + 1) / 4 * 100);
 		Set Gravity(Event Player, 100);
 		Event Player.FLY_MANUAL = False;
 		Small Message(Event Player, Custom String("FLY: {0}", Custom String("Disabled")));
@@ -1228,8 +1344,9 @@ rule("Camera Close")
 
 	actions
 	{
-		Start Camera(Event Player, Event Player + Vector(0, 2, 0) + Facing Direction Of(Event Player) * -3, Event Player + (Eye Position(
-			Event Player) - Event Player) + Facing Direction Of(Event Player) * 20, 100);
+		Start Camera(Event Player, Event Player + Vector(0, 2 * (Event Player.SCALE_SIZE + 1) / 4, 0) + Facing Direction Of(Event Player)
+			* -3 * (Event Player.SCALE_SIZE + 1) / 4, Event Player + (Eye Position(Event Player) - Event Player) + Facing Direction Of(
+			Event Player) * 20, 100);
 		Small Message(Event Player, Custom String("Camera: Close"));
 	}
 }
@@ -1250,8 +1367,9 @@ rule("Camera Far")
 
 	actions
 	{
-		Start Camera(Event Player, Event Player + Vector(0, 2, 0) + Facing Direction Of(Event Player) * -5, Event Player + (Eye Position(
-			Event Player) - Event Player) + Facing Direction Of(Event Player) * 20, 100);
+		Start Camera(Event Player, Event Player + Vector(0, 2 * (Event Player.SCALE_SIZE + 1) / 4, 0) + Facing Direction Of(Event Player)
+			* -5 * (Event Player.SCALE_SIZE + 1) / 4, Event Player + (Eye Position(Event Player) - Event Player) + Facing Direction Of(
+			Event Player) * 20, 100);
 		Small Message(Event Player, Custom String("Camera: Far"));
 	}
 }
@@ -1272,8 +1390,9 @@ rule("Camera Selfie")
 
 	actions
 	{
-		Start Camera(Event Player, Event Player + Vector(0, 2, 0) + Facing Direction Of(Event Player) * 3, Event Player + (Eye Position(
-			Event Player) - Event Player) + Facing Direction Of(Event Player) * -20, 100);
+		Start Camera(Event Player, Event Player + Vector(0, 2 * (Event Player.SCALE_SIZE + 1) / 4, 0) + Facing Direction Of(Event Player)
+			* 3 * (Event Player.SCALE_SIZE + 1) / 4, Event Player + (Eye Position(Event Player) - Event Player) + Facing Direction Of(
+			Event Player) * -20, 100);
 		Small Message(Event Player, Custom String("Camera: Selfie"));
 	}
 }
@@ -1356,6 +1475,35 @@ rule("Camera Fly Destructor")
 	}
 }
 
+rule("Scaling")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.SCALING == True;
+	}
+
+	actions
+	{
+		Start Scaling Player(Event Player, (Event Player.SCALE_SIZE + 1) * 0.250, False);
+		Start Modifying Hero Voice Lines(Event Player, 2 + -0.250 * (1 + Event Player.SCALE_SIZE), True);
+		Set Move Speed(Event Player, (Event Player.SCALE_SIZE + 1) / 4 * 100);
+		Set Jump Vertical Speed(Event Player, 3.125 * (Event Player.SCALE_SIZE + 1) + 87.500);
+		Small Message(Event Player, Custom String("Scale: {0}", (Event Player.SCALE_SIZE + 1) * 0.250));
+		Skip If(Event Player.SCALE_SIZE <= 8, 1);
+		Disable Movement Collision With Environment(Event Player, False);
+		Skip If(Event Player.SCALE_SIZE > 8, 1);
+		Enable Movement Collision With Environment(Event Player);
+		Event Player.SCALING = False;
+	}
+}
+
 rule("Menu Start")
 {
 	event
@@ -1427,6 +1575,10 @@ rule("Menu Start")
 		Create HUD Text(Event Player, Null, Null, Custom String(
 			"---- Utility ------------------------------------------------------------------------------------------"), Left, 1100, White,
 			White, Lime Green, Sort Order, Default Visibility);
+		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("  - Scale: Ability 2 + Primary/Secondary Fire"), Null, Left, 1050, White, White,
+			White, Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Custom String("  - Sleep: (Toggle) Ultimate Status; (Disable) Crouch"), Null, Left, 1000,
@@ -1510,7 +1662,8 @@ rule("HUD Start")
 			White, None, Default Visibility);
 		Modify Player Variable(Event Player, HUD_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Global.GITHUB_DISCORD, Right, 0.200, White, White, White, String, Default Visibility);
+		Create HUD Text(Event Player, Null, Null, Custom String("Join the Discord server: discord.gg/NXHN5GG"), Right, 0.200, White, White,
+			White, String, Default Visibility);
 		Modify Player Variable(Event Player, HUD_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Null, Custom String("Chill: Crouch + Emote"), Right, 0.300, White, White, White, None,
@@ -2918,7 +3071,8 @@ rule("Aura 01")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, White, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Sparkles, White, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} White", Event Player.AURA_NUMBER));
 	}
@@ -2941,7 +3095,8 @@ rule("Aura 02")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Yellow, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Sparkles, Yellow, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Yellow", Event Player.AURA_NUMBER));
 	}
@@ -2964,7 +3119,8 @@ rule("Aura 03")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Green, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Sparkles, Green, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Green", Event Player.AURA_NUMBER));
 	}
@@ -2987,7 +3143,8 @@ rule("Aura 04")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Purple, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Sparkles, Purple, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Purple", Event Player.AURA_NUMBER));
 	}
@@ -3010,7 +3167,8 @@ rule("Aura 05")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Red, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Sparkles, Red, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Red", Event Player.AURA_NUMBER));
 	}
@@ -3033,7 +3191,8 @@ rule("Aura 06")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Blue, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Sparkles, Blue, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Blue", Event Player.AURA_NUMBER));
 	}
@@ -3056,7 +3215,8 @@ rule("Aura 07")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Aqua, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Sparkles, Aqua, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Aqua", Event Player.AURA_NUMBER));
 	}
@@ -3079,7 +3239,8 @@ rule("Aura 08")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Orange, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Sparkles, Orange, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Orange", Event Player.AURA_NUMBER));
 	}
@@ -3102,7 +3263,8 @@ rule("Aura 09")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Sky Blue, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Sparkles, Sky Blue, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Sky Blue", Event Player.AURA_NUMBER));
 	}
@@ -3125,7 +3287,8 @@ rule("Aura 10")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Turquoise, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Sparkles, Turquoise, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Turquoise", Event Player.AURA_NUMBER));
 	}
@@ -3148,7 +3311,8 @@ rule("Aura 11")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Lime Green, Event Player, Global.AURA_SIZE, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Sparkles, Lime Green, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Lime Green", Event Player.AURA_NUMBER));
 	}
@@ -3214,6 +3378,34 @@ rule("Wave")
 			Random Value In Array(Global.GREETS)));
 		Wait(0.250, Ignore Condition);
 		Event Player.WAVED = Null;
+		Wait(0.500, Ignore Condition);
+	}
+}
+
+rule("Bonks")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Melee) == True;
+	}
+
+	actions
+	{
+		Event Player.BONKED = Player Closest To Reticle(Event Player, All Teams);
+		Skip If(Distance Between(Position Of(Event Player), Position Of(Event Player.BONKED)) > 5, 1);
+		Small Message(All Players(All Teams), Custom String("{0} {2} {1} ", Custom String("{1} {0}", Event Player, Hero Icon String(
+			Hero Of(Event Player))), Custom String("{0} {1} ", Event Player.BONKED, Hero Icon String(Hero Of(Event Player.BONKED))),
+			Random Value In Array(Global.BONKS)));
+		Wait(0.250, Ignore Condition);
+		Event Player.BONKED = Null;
 		Wait(0.500, Ignore Condition);
 	}
 }
@@ -3352,7 +3544,7 @@ rule("Jump")
 	}
 }
 
-rule("Loop OP (HUD Github)")
+disabled rule("Loop OP (HUD Github)")
 {
 	event
 	{
