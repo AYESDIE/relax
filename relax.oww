@@ -82,9 +82,10 @@ rule("Workshop Variables Override")
 	actions
 	{
 		"Time is in seconds."
-		Global.MATCH_TIME = Workshop Setting Integer(Custom String("Global"), Custom String("Match Time (in Seconds)"), 1800, 300, 3600);
-		Global.SLO_MO_ENABLE = Workshop Setting Toggle(Custom String("Plugins"), Custom String("Slo Mo"), False);
-		Global.CUSTOM_BOT_ENABLE = Workshop Setting Toggle(Custom String("Plugins"), Custom String("Custom Bot"), False);
+		Global.MATCH_TIME = Workshop Setting Integer(Custom String("Global"), Custom String("Match Time (in Seconds)"), 1800, 300, 3600,
+			0);
+		Global.SLO_MO_ENABLE = Workshop Setting Toggle(Custom String("Plugins"), Custom String("Slo Mo"), False, 0);
+		Global.CUSTOM_BOT_ENABLE = Workshop Setting Toggle(Custom String("Plugins"), Custom String("Custom Bot"), False, 0);
 	}
 }
 
@@ -102,7 +103,7 @@ rule("init")
 		Global.BOT_SPAWN = False;
 		Global.TOTAL_CAMERA = 5;
 		Global.TOTAL_ICON = 36;
-		Global.TOTAL_AURA = 11;
+		Global.TOTAL_AURA = 23;
 		Global.AURA_SIZE = 1;
 		Global.TOTAL_FLY = 3;
 		Set Match Time(Global.MATCH_TIME);
@@ -110,7 +111,7 @@ rule("init")
 		Global.SLO_MO_REQUEST = False;
 		Global.SLO_MO_LOBBY_COUNT = 0;
 		Global.SLO_MO_COUNT_VOTE = False;
-		Global.VERSION = Custom String("1.5.2 (Unstable)");
+		Global.VERSION = Custom String("(Master; Unstable; Base: v1.5.2)");
 		Global.HUGS = Custom String("(っ´▽｀)っ");
 		Modify Global Variable(HUGS, Append To Array, Custom String("（っ・∀・）っ"));
 		Modify Global Variable(HUGS, Append To Array, Custom String("(> ^_^ )>"));
@@ -155,21 +156,21 @@ rule("HUD")
 		Wait(5, Ignore Condition);
 		Big Message(All Players(All Teams), Custom String("Welcome"));
 		disabled Create HUD Text(All Players(All Teams), Null, Null, Custom String("Relax v0.1 is a script for chill server by AYESDIE#1904"),
-			Right, 0, White, Purple, Purple, Visible To and String, Default Visibility);
+			Right, 0, Color(White), Color(Purple), Color(Purple), Visible To and String, Default Visibility);
 		disabled Create HUD Text(All Players(All Teams), Null, Null, Custom String("Join the discord server in the description to report bugs."),
-			Right, 0.100, White, Purple, Purple, Visible To and String, Default Visibility);
-		disabled Create HUD Text(All Players(All Teams), Null, Null, Custom String("Chill: Crouch + Emote"), Right, 1, White, Blue, Blue,
-			Visible To and String, Default Visibility);
-		disabled Create HUD Text(All Players(All Teams), Null, Custom String("Sleep: Ultimate Status"), Null, Right, 2, White, Orange, Orange,
-			Visible To and String, Default Visibility);
-		disabled Create HUD Text(All Players(All Teams), Null, Custom String("Invisible: Crouch + Acknowledge"), Null, Right, 3, White, Yellow,
-			Yellow, Visible To and String, Default Visibility);
-		disabled Create HUD Text(All Players(All Teams), Null, Custom String("Teleport: Interact"), Null, Right, 4, White, Green, Green,
-			Visible To and String, Default Visibility);
-		disabled Create HUD Text(All Players(All Teams), Null, Custom String("Camera: Crouch + Ability 1"), Null, Right, 5, White, Aqua, Aqua,
-			Visible To and String, Default Visibility);
-		disabled Create HUD Text(All Players(All Teams), Null, Null, Custom String("Host: {0}", Host Player), Left, 0, White, Red, Red,
-			Visible To and String, Default Visibility);
+			Right, 0.100, Color(White), Color(Purple), Color(Purple), Visible To and String, Default Visibility);
+		disabled Create HUD Text(All Players(All Teams), Null, Null, Custom String("Chill: Crouch + Emote"), Right, 1, Color(White), Color(Blue),
+			Color(Blue), Visible To and String, Default Visibility);
+		disabled Create HUD Text(All Players(All Teams), Null, Custom String("Sleep: Ultimate Status"), Null, Right, 2, Color(White), Color(Orange),
+			Color(Orange), Visible To and String, Default Visibility);
+		disabled Create HUD Text(All Players(All Teams), Null, Custom String("Invisible: Crouch + Acknowledge"), Null, Right, 3, Color(White),
+			Color(Yellow), Color(Yellow), Visible To and String, Default Visibility);
+		disabled Create HUD Text(All Players(All Teams), Null, Custom String("Teleport: Interact"), Null, Right, 4, Color(White), Color(Green),
+			Color(Green), Visible To and String, Default Visibility);
+		disabled Create HUD Text(All Players(All Teams), Null, Custom String("Camera: Crouch + Ability 1"), Null, Right, 5, Color(White), Color(
+			Aqua), Color(Aqua), Visible To and String, Default Visibility);
+		disabled Create HUD Text(All Players(All Teams), Null, Null, Custom String("Host: {0}", Host Player), Left, 0, Color(White), Color(Red),
+			Color(Red), Visible To and String, Default Visibility);
 	}
 }
 
@@ -261,7 +262,7 @@ rule("Chill Toggle")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Is Communicating Any Emote(Event Player) == True;
 		Event Player.INVISIBLE == False;
 	}
@@ -283,7 +284,7 @@ rule("Chill Toggle (Invisible WARN)")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Is Communicating Any Emote(Event Player) == True;
 		Event Player.INVISIBLE == True;
 	}
@@ -305,7 +306,7 @@ rule("Chill Toggle (Fly WARN)")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Is Communicating Any Emote(Event Player) == True;
 		Event Player.FLY_STATE != 0;
 	}
@@ -328,7 +329,7 @@ rule("Teleport Toggle")
 	conditions
 	{
 		Is Standing(Event Player) == False;
-		Is Button Held(Event Player, Interact) == True;
+		Is Button Held(Event Player, Button(Interact)) == True;
 		Event Player.CHILL == True;
 	}
 
@@ -350,7 +351,7 @@ rule("Teleport Toggle (Chill WARN)")
 	conditions
 	{
 		Is Standing(Event Player) == False;
-		Is Button Held(Event Player, Interact) == True;
+		Is Button Held(Event Player, Button(Interact)) == True;
 		Event Player.CHILL == False;
 	}
 
@@ -372,8 +373,8 @@ rule("Hero Swap Toggle")
 	conditions
 	{
 		Event Player.SNAP_PROCESS == False;
-		Is Button Held(Event Player, Jump) == True;
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Jump)) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Vertical Facing Angle Of(Event Player) >= 85;
 	}
 
@@ -395,8 +396,8 @@ rule("Hero Swap Toggle (Bot WARN)")
 	conditions
 	{
 		Event Player.SNAP_PROCESS == True;
-		Is Button Held(Event Player, Jump) == True;
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Jump)) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Vertical Facing Angle Of(Event Player) >= 85;
 	}
 
@@ -418,7 +419,8 @@ rule("Sleep Toggle")
 
 	conditions
 	{
-		(Is Communicating(Event Player, Ultimate Status) || (Event Player.SLEEP == True && Is Button Held(Event Player, Crouch))) == True;
+		(Is Communicating(Event Player, Ultimate Status) || (Event Player.SLEEP == True && Is Button Held(Event Player, Button(Crouch))))
+			== True;
 		Event Player.CHILL == True;
 	}
 
@@ -439,7 +441,8 @@ rule("Sleep Toggle (Chill WARN)")
 
 	conditions
 	{
-		(Is Communicating(Event Player, Ultimate Status) || (Event Player.SLEEP == True && Is Button Held(Event Player, Crouch))) == True;
+		(Is Communicating(Event Player, Ultimate Status) || (Event Player.SLEEP == True && Is Button Held(Event Player, Button(Crouch))))
+			== True;
 		Event Player.CHILL == False;
 	}
 
@@ -460,8 +463,8 @@ rule("Fly Toggle")
 
 	conditions
 	{
-		Is Button Held(Event Player, Jump) == True;
-		Is Button Held(Event Player, Ability 1) == True;
+		Is Button Held(Event Player, Button(Jump)) == True;
+		Is Button Held(Event Player, Button(Ability 1)) == True;
 		Event Player.CHILL == True;
 	}
 
@@ -490,8 +493,8 @@ rule("Fly Toggle (WARN)")
 
 	conditions
 	{
-		Is Button Held(Event Player, Jump) == True;
-		Is Button Held(Event Player, Ability 1) == True;
+		Is Button Held(Event Player, Button(Jump)) == True;
+		Is Button Held(Event Player, Button(Ability 1)) == True;
 		Event Player.CHILL == False;
 	}
 
@@ -518,7 +521,7 @@ rule("Fly Manual Toggle ON")
 	conditions
 	{
 		Event Player.FLY_MANUAL == True;
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 	}
 
 	actions
@@ -539,7 +542,7 @@ rule("Fly Manual Toggle OFF")
 	conditions
 	{
 		Event Player.FLY_MANUAL == True;
-		Is Button Held(Event Player, Crouch) == False;
+		Is Button Held(Event Player, Button(Crouch)) == False;
 	}
 
 	actions
@@ -559,7 +562,7 @@ rule("Invisible Toggle")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Is Communicating(Event Player, Group Up) == True;
 		Event Player.CHILL == True;
 	}
@@ -581,7 +584,7 @@ rule("Invisible Toggle (WARN)")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Is Communicating(Event Player, Group Up) == True;
 		Event Player.CHILL == False;
 	}
@@ -603,8 +606,8 @@ rule("Camera Toggle")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
-		Is Button Held(Event Player, Ability 1) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
+		Is Button Held(Event Player, Button(Ability 1)) == True;
 	}
 
 	actions
@@ -628,7 +631,7 @@ rule("Fly Camera Move Toggle ON")
 	conditions
 	{
 		Event Player.FLY_CAMERA_EXIST == True;
-		Is Button Held(Event Player, Reload) == True;
+		Is Button Held(Event Player, Button(Reload)) == True;
 	}
 
 	actions
@@ -649,7 +652,7 @@ rule("Fly Camera Move Toggle OFF")
 	conditions
 	{
 		Event Player.FLY_CAMERA_EXIST == True;
-		Is Button Held(Event Player, Reload) == False;
+		Is Button Held(Event Player, Button(Reload)) == False;
 	}
 
 	actions
@@ -671,9 +674,9 @@ rule("Size Toggle UP")
 	{
 		Event Player.CHILL == True;
 		Event Player.SCALING == False;
-		Is Button Held(Event Player, Ability 2) == True;
-		Is Button Held(Event Player, Primary Fire) == False;
-		Is Button Held(Event Player, Secondary Fire) == True;
+		Is Button Held(Event Player, Button(Ability 2)) == True;
+		Is Button Held(Event Player, Button(Primary Fire)) == False;
+		Is Button Held(Event Player, Button(Secondary Fire)) == True;
 	}
 
 	actions
@@ -697,9 +700,9 @@ rule("Size Toggle DOWN")
 	{
 		Event Player.CHILL == True;
 		Event Player.SCALING == False;
-		Is Button Held(Event Player, Ability 2) == True;
-		Is Button Held(Event Player, Primary Fire) == True;
-		Is Button Held(Event Player, Secondary Fire) == False;
+		Is Button Held(Event Player, Button(Ability 2)) == True;
+		Is Button Held(Event Player, Button(Primary Fire)) == True;
+		Is Button Held(Event Player, Button(Secondary Fire)) == False;
 	}
 
 	actions
@@ -724,9 +727,9 @@ rule("Size Toggle UP (Chill WARN)")
 	{
 		Event Player.CHILL == False;
 		Event Player.SCALING == False;
-		Is Button Held(Event Player, Ability 2) == True;
-		Is Button Held(Event Player, Primary Fire) == False;
-		Is Button Held(Event Player, Secondary Fire) == True;
+		Is Button Held(Event Player, Button(Ability 2)) == True;
+		Is Button Held(Event Player, Button(Primary Fire)) == False;
+		Is Button Held(Event Player, Button(Secondary Fire)) == True;
 	}
 
 	actions
@@ -748,9 +751,9 @@ rule("Size Toggle DOWN (Chill WARN)")
 	{
 		Event Player.CHILL == False;
 		Event Player.SCALING == False;
-		Is Button Held(Event Player, Ability 2) == True;
-		Is Button Held(Event Player, Primary Fire) == True;
-		Is Button Held(Event Player, Secondary Fire) == False;
+		Is Button Held(Event Player, Button(Ability 2)) == True;
+		Is Button Held(Event Player, Button(Primary Fire)) == True;
+		Is Button Held(Event Player, Button(Secondary Fire)) == False;
 	}
 
 	actions
@@ -770,7 +773,7 @@ rule("Icon Toggle Left")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Is Communicating(Event Player, Voice Line Left) == True;
 	}
 
@@ -794,7 +797,7 @@ rule("Icon Toggle Right")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Is Communicating(Event Player, Voice Line Right) == True;
 	}
 
@@ -815,7 +818,7 @@ rule("Icon Toggle Off")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		(Is Communicating(Event Player, Voice Line Left) || Is Communicating(Event Player, Voice Line Right)) == True;
 		Vertical Facing Angle Of(Event Player) >= 85;
 	}
@@ -837,7 +840,7 @@ rule("Aura Toggle Up")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Is Communicating(Event Player, Voice Line Up) == True;
 	}
 
@@ -858,7 +861,7 @@ rule("Aura Toggle Down")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Is Communicating(Event Player, Voice Line Down) == True;
 	}
 
@@ -882,7 +885,7 @@ rule("Aura Toggle Off")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		(Is Communicating(Event Player, Voice Line Up) || Is Communicating(Event Player, Voice Line Down)) == True;
 		Vertical Facing Angle Of(Event Player) >= 85;
 	}
@@ -904,7 +907,7 @@ rule("Menu Toggle")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Is Communicating(Event Player, Need Healing) == True;
 		Event Player.MENU_GUARD == False;
 	}
@@ -927,9 +930,9 @@ rule("HUD Toggle")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
-		Is Button Held(Event Player, Primary Fire) == True;
-		Is Button Held(Event Player, Secondary Fire) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
+		Is Button Held(Event Player, Button(Primary Fire)) == True;
+		Is Button Held(Event Player, Button(Secondary Fire)) == True;
 		Event Player.HUD_GUARD == False;
 		Event Player.MENU_GUARD == False;
 	}
@@ -977,7 +980,7 @@ rule("Chill Start")
 		Set Healing Received(Event Player, 10000);
 		Set Damage Dealt(Event Player, 0);
 		Wait(0.250, Ignore Condition);
-		Play Effect(All Players(All Teams), Good Pickup Effect, Blue, Event Player, 100);
+		Play Effect(All Players(All Teams), Good Pickup Effect, Color(Blue), Event Player, 100);
 		Wait(0.250, Ignore Condition);
 		Heal(Event Player, Null, 10000);
 	}
@@ -1011,7 +1014,7 @@ rule("Chill Stop")
 		Set Jump Vertical Speed(Event Player, 100);
 		Event Player.SCALE_SIZE = 3;
 		Wait(0.250, Ignore Condition);
-		Play Effect(All Players(All Teams), Good Pickup Effect, Red, Event Player, 100);
+		Play Effect(All Players(All Teams), Good Pickup Effect, Color(Red), Event Player, 100);
 	}
 }
 
@@ -1034,7 +1037,7 @@ rule("Teleport")
 		Event Player.FACING_DIRECTION = Facing Direction Of(Event Player);
 		Teleport(Event Player, Position Of(Event Player) + Facing Direction Of(Event Player) * (Event Player.SCALE_SIZE + 1) * (15 / 4));
 		Set Facing(Event Player, Event Player.FACING_DIRECTION, To World);
-		Play Effect(All Players(All Teams), Good Pickup Effect, Aqua, Event Player, 100);
+		Play Effect(All Players(All Teams), Good Pickup Effect, Color(Aqua), Event Player, 100);
 		Event Player.TELEPORT = False;
 	}
 }
@@ -1524,86 +1527,86 @@ rule("Menu Start")
 		Event Player.MENU_GUARD = True;
 		Skip If(Event Player != Host Player || !Global.SLO_MO_ENABLE, 3);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Slo Mo: Crouch + Ultimate + Acknowledge"), Null, Left, 2300, White, White,
-			White, Sort Order, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("  - Slo Mo: Crouch + Ultimate + Acknowledge"), Null, Left, 2300, Color(White),
+			Color(White), Color(White), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Skip If(Event Player != Host Player || !Global.CUSTOM_BOT_ENABLE, 3);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Bot: Ultimate + Group Up"), Null, Left, 2200, White, White, White,
-			Sort Order, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("  - Bot: Ultimate + Group Up"), Null, Left, 2200, Color(White), Color(White),
+			Color(White), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Skip If(Event Player != Host Player || (!Global.SLO_MO_ENABLE && !Global.CUSTOM_BOT_ENABLE), 3);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Null, Custom String(
-			"---- Mod Options --------------------------------------------------------------------------"), Left, 2100, White, White, Red,
-			Sort Order, Default Visibility);
+			"---- Mod Options --------------------------------------------------------------------------"), Left, 2100, Color(White),
+			Color(White), Color(Red), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Custom String("  - Disable Aura: Look Down + Crouch + Voiceline Up or Down"), Null, Left, 1900,
-			White, White, White, Sort Order, Default Visibility);
+			Color(White), Color(White), Color(White), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Aura: Crouch + Voiceline (Up/Down to cycle)"), Null, Left, 1800, White,
-			White, White, Sort Order, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("  - Aura: Crouch + Voiceline (Up/Down to cycle)"), Null, Left, 1800, Color(
+			White), Color(White), Color(White), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Custom String("  - Disable Icon: Look Down + Crouch + Voiceline (Left/Right)"), Null, Left,
-			1700, White, White, White, Sort Order, Default Visibility);
+			1700, Color(White), Color(White), Color(White), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Icon: Crouch + Voiceline (Left/Right to cycle)"), Null, Left, 1600, White,
-			White, White, Sort Order, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("  - Icon: Crouch + Voiceline (Left/Right to cycle)"), Null, Left, 1600, Color(
+			White), Color(White), Color(White), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Null, Custom String(
-			"---- Customization -----------------------------------------------------------------------"), Left, 1500, White, White,
-			Orange, Sort Order, Default Visibility);
+			"---- Customization -----------------------------------------------------------------------"), Left, 1500, Color(White), Color(
+			White), Color(Orange), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Custom String("  - HUD: (Hold) Crouch + Primary Fire + Secondary Fire"), Null, Left, 1400,
-			White, White, White, Sort Order, Default Visibility);
+			Color(White), Color(White), Color(White), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Hero Swap: Look Down + Jump + Crouch"), Null, Left, 1300, White, White,
-			White, Sort Order, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("  - Hero Swap: Look Down + Jump + Crouch"), Null, Left, 1300, Color(White),
+			Color(White), Color(White), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Camera: (Hold) Crouch + Ability 1"), Null, Left, 1200, White, White, White,
-			Sort Order, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("  - Camera: (Hold) Crouch + Ability 1"), Null, Left, 1200, Color(White), Color(
+			White), Color(White), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Null, Custom String(
-			"---- Utility ------------------------------------------------------------------------------------------"), Left, 1100, White,
-			White, Lime Green, Sort Order, Default Visibility);
+			"---- Utility ------------------------------------------------------------------------------------------"), Left, 1100, Color(
+			White), Color(White), Color(Lime Green), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Scale: Ability 2 + Primary/Secondary Fire"), Null, Left, 1050, White, White,
-			White, Sort Order, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("  - Scale: Ability 2 + Primary/Secondary Fire"), Null, Left, 1050, Color(White),
+			Color(White), Color(White), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Custom String("  - Sleep: (Toggle) Ultimate Status; (Disable) Crouch"), Null, Left, 1000,
-			White, White, White, Sort Order, Default Visibility);
+			Color(White), Color(White), Color(White), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Invisible: Crouch + Group Up"), Null, Left, 900, White, White, White,
-			Sort Order, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("  - Invisible: Crouch + Group Up"), Null, Left, 900, Color(White), Color(White),
+			Color(White), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Fly: (Hold) Ability 1 + Jump"), Null, Left, 800, White, White, White,
-			Sort Order, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("  - Fly: (Hold) Ability 1 + Jump"), Null, Left, 800, Color(White), Color(White),
+			Color(White), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("  - Teleport: Interact"), Null, Left, 700, White, White, White, Sort Order,
-			Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("  - Teleport: Interact"), Null, Left, 700, Color(White), Color(White), Color(
+			White), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Custom String(" - Chill: Crouch + Emote"), Left, 600, White, White, White, Sort Order,
-			Default Visibility);
+		Create HUD Text(Event Player, Null, Null, Custom String(" - Chill: Crouch + Emote"), Left, 600, Color(White), Color(White), Color(
+			White), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Null, Custom String(
-			"---- Chill -------------------------------------------------------------------------------------------"), Left, 500, White,
-			White, Sky Blue, Sort Order, Default Visibility);
+			"---- Chill -------------------------------------------------------------------------------------------"), Left, 500, Color(
+			White), Color(White), Color(Sky Blue), Sort Order, Default Visibility);
 		Modify Player Variable(Event Player, MENU_ARRAY, Append To Array, Last Text ID);
 		Event Player.MENU_ICON = Custom String("/\\");
 		Event Player.MENU_GUARD = False;
@@ -1654,29 +1657,29 @@ rule("HUD Start")
 	{
 		Event Player.HUD_GUARD = True;
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Custom String("Relax v{0}", Global.VERSION), Right, 0, White, White, White, None,
-			Default Visibility);
+		Create HUD Text(Event Player, Null, Null, Custom String("Relax v{0}", Global.VERSION), Right, 0, Color(White), Color(White), Color(
+			White), None, Default Visibility);
 		Modify Player Variable(Event Player, HUD_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Custom String("A script for chill server by AYESDIE#1904"), Right, 0.100, White, White,
-			White, None, Default Visibility);
+		Create HUD Text(Event Player, Null, Null, Custom String("A script for chill server by AYESDIE#1904"), Right, 0.100, Color(White),
+			Color(White), Color(White), None, Default Visibility);
 		Modify Player Variable(Event Player, HUD_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Custom String("Join the Discord server: discord.gg/NXHN5GG"), Right, 0.200, White, White,
-			White, String, Default Visibility);
+		Create HUD Text(Event Player, Null, Null, Custom String("Join the Discord server: discord.gg/NXHN5GG"), Right, 0.200, Color(White),
+			Color(White), Color(White), String, Default Visibility);
 		Modify Player Variable(Event Player, HUD_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Custom String("Chill: Crouch + Emote"), Right, 0.300, White, White, White, None,
-			Default Visibility);
+		Create HUD Text(Event Player, Null, Null, Custom String("Chill: Crouch + Emote"), Right, 0.300, Color(White), Color(White), Color(
+			White), None, Default Visibility);
 		Modify Player Variable(Event Player, HUD_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Menu: Crouch + Need Healing"), Null, Right, 0.400, White, White, White, None,
-			Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Menu: Crouch + Need Healing"), Null, Right, 0.400, Color(White), Color(White),
+			Color(White), None, Default Visibility);
 		Modify Player Variable(Event Player, HUD_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Null, Custom String(
 			"-----------------------------------------------------{0}-----------------------------------------------------",
-			Event Player.MENU_ICON), Left, 2000, White, White, White, Sort Order and String, Default Visibility);
+			Event Player.MENU_ICON), Left, 2000, Color(White), Color(White), Color(White), Sort Order and String, Default Visibility);
 		Modify Player Variable(Event Player, HUD_ARRAY, Append To Array, Last Text ID);
 		Event Player.HUD_GUARD = False;
 		Small Message(Event Player, Custom String("HUD: ON"));
@@ -1732,7 +1735,7 @@ rule("Spawn Bot Toggle")
 		Event Player == Host Player;
 		Is Crouching(Event Player) == False;
 		Is Communicating(Event Player, Group Up) == True;
-		Is Button Held(Event Player, Ultimate) == True;
+		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Global.CUSTOM_BOT_ENABLE == True;
 	}
 
@@ -1834,41 +1837,41 @@ rule("Bot Behaviour")
 		Event Player.ICON_NUMBER = 17;
 		Skip(37);
 		Event Player.ICON_NUMBER = Event Player.ICON_NUMBER;
-		Stop Holding Button(Event Player, Primary Fire);
+		Stop Holding Button(Event Player, Button(Primary Fire));
 		Wait(Random Integer(1, 10), Ignore Condition);
-		Start Holding Button(Event Player, Primary Fire);
+		Start Holding Button(Event Player, Button(Primary Fire));
 		Wait(5, Ignore Condition);
-		Stop Holding Button(Event Player, Primary Fire);
-		Stop Holding Button(Event Player, Secondary Fire);
+		Stop Holding Button(Event Player, Button(Primary Fire));
+		Stop Holding Button(Event Player, Button(Secondary Fire));
 		Wait(Random Integer(1, 10), Ignore Condition);
-		Start Holding Button(Event Player, Secondary Fire);
+		Start Holding Button(Event Player, Button(Secondary Fire));
 		Wait(5, Ignore Condition);
-		Stop Holding Button(Event Player, Secondary Fire);
-		Stop Holding Button(Event Player, Ability 1);
+		Stop Holding Button(Event Player, Button(Secondary Fire));
+		Stop Holding Button(Event Player, Button(Ability 1));
 		Wait(Random Integer(1, 10), Ignore Condition);
-		Start Holding Button(Event Player, Ability 1);
+		Start Holding Button(Event Player, Button(Ability 1));
 		Wait(5, Ignore Condition);
-		Stop Holding Button(Event Player, Ability 1);
-		Stop Holding Button(Event Player, Ability 2);
+		Stop Holding Button(Event Player, Button(Ability 1));
+		Stop Holding Button(Event Player, Button(Ability 2));
 		Wait(Random Integer(1, 10), Ignore Condition);
-		Start Holding Button(Event Player, Ability 2);
+		Start Holding Button(Event Player, Button(Ability 2));
 		Wait(5, Ignore Condition);
-		Stop Holding Button(Event Player, Ability 2);
-		Stop Holding Button(Event Player, Ultimate);
+		Stop Holding Button(Event Player, Button(Ability 2));
+		Stop Holding Button(Event Player, Button(Ultimate));
 		Wait(Random Integer(1, 10), Ignore Condition);
-		Start Holding Button(Event Player, Ultimate);
+		Start Holding Button(Event Player, Button(Ultimate));
 		Wait(5, Ignore Condition);
-		Stop Holding Button(Event Player, Ultimate);
-		Stop Holding Button(Event Player, Jump);
+		Stop Holding Button(Event Player, Button(Ultimate));
+		Stop Holding Button(Event Player, Button(Jump));
 		Wait(Random Integer(1, 10), Ignore Condition);
-		Start Holding Button(Event Player, Jump);
+		Start Holding Button(Event Player, Button(Jump));
 		Wait(5, Ignore Condition);
-		Stop Holding Button(Event Player, Jump);
-		Stop Holding Button(Event Player, Crouch);
+		Stop Holding Button(Event Player, Button(Jump));
+		Stop Holding Button(Event Player, Button(Crouch));
 		Wait(Random Integer(1, 10), Ignore Condition);
-		Start Holding Button(Event Player, Crouch);
+		Start Holding Button(Event Player, Button(Crouch));
 		Wait(5, Ignore Condition);
-		Stop Holding Button(Event Player, Crouch);
+		Stop Holding Button(Event Player, Button(Crouch));
 		Teleport(Event Player, Random Value In Array(All Players(All Teams)));
 		Loop;
 	}
@@ -1928,7 +1931,7 @@ rule("Bot Snap")
 		Kill(Attacker, Event Player);
 		Big Message(All Players(All Teams), Custom String("{0} bot snapped {1} out of meta.", Custom String("{0} {1}", Hero Icon String(
 			Hero Of(Event Player)), Event Player), Custom String("{0} {1}", Hero Icon String(Hero Of(Attacker)), Attacker)));
-		Play Effect(All Players(All Teams), Bad Explosion, Red, Event Player, 200);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Red), Event Player, 200);
 		Attacker.SNAP_PROCESS = False;
 		Event Player.ICON_NUMBER = 17;
 	}
@@ -1967,7 +1970,7 @@ rule("Bot Snap - D.Va")
 		Kill(Attacker, Event Player);
 		Big Message(All Players(All Teams), Custom String("{0} bot snapped {1} out of meta.", Custom String("{0} {1}", Hero Icon String(
 			Hero Of(Event Player)), Event Player), Custom String("{0} {1}", Hero Icon String(Hero Of(Attacker)), Attacker)));
-		Play Effect(All Players(All Teams), Bad Explosion, Red, Event Player, 200);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Red), Event Player, 200);
 		Attacker.SNAP_PROCESS = False;
 		Event Player.ICON_NUMBER = 17;
 	}
@@ -2006,7 +2009,7 @@ rule("Bot Snap - Baptiste")
 		Kill(Attacker, Event Player);
 		Big Message(All Players(All Teams), Custom String("{0} bot snapped {1} out of meta.", Custom String("{0} {1}", Hero Icon String(
 			Hero Of(Event Player)), Event Player), Custom String("{0} {1}", Hero Icon String(Hero Of(Attacker)), Attacker)));
-		Play Effect(All Players(All Teams), Bad Explosion, Red, Event Player, 200);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Red), Event Player, 200);
 		Attacker.SNAP_PROCESS = False;
 		Event Player.ICON_NUMBER = 17;
 	}
@@ -2025,8 +2028,8 @@ rule("Slo Mo Request Toggle")
 	{
 		Event Player == Host Player;
 		Is Communicating(Event Player, Acknowledge) == True;
-		Is Button Held(Event Player, Ultimate) == True;
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Global.SLO_MO_ENABLE == True;
 	}
 
@@ -2212,7 +2215,7 @@ rule("Icon 01")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Arrow: Down, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Arrow: Down, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Arrow: Down)));
 	}
@@ -2235,7 +2238,7 @@ rule("Icon 02")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Arrow: Left, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Arrow: Left, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Arrow: Left)));
 	}
@@ -2258,7 +2261,7 @@ rule("Icon 03")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Arrow: Right, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Arrow: Right, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Arrow: Right)));
 	}
@@ -2281,7 +2284,7 @@ rule("Icon 04")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Arrow: Up, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Arrow: Up, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Arrow: Up)));
 	}
@@ -2304,7 +2307,7 @@ rule("Icon 05")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Asterisk, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Asterisk, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Asterisk)));
 	}
@@ -2327,7 +2330,7 @@ rule("Icon 06")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Bolt, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Bolt, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Bolt)));
 	}
@@ -2350,7 +2353,7 @@ rule("Icon 07")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Checkmark, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Checkmark, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Checkmark)));
 	}
@@ -2373,7 +2376,7 @@ rule("Icon 08")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Circle, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Circle, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Circle)));
 	}
@@ -2396,7 +2399,7 @@ rule("Icon 09")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Club, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Club, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Club)));
 	}
@@ -2419,7 +2422,7 @@ rule("Icon 10")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Diamond, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Diamond, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Diamond)));
 	}
@@ -2442,7 +2445,7 @@ rule("Icon 11")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Dizzy, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Dizzy, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Dizzy)));
 	}
@@ -2465,7 +2468,7 @@ rule("Icon 12")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Exclamation Mark, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Exclamation Mark, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Exclamation Mark)));
 	}
@@ -2488,7 +2491,7 @@ rule("Icon 13")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Eye, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Eye, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Eye)));
 	}
@@ -2511,7 +2514,7 @@ rule("Icon 14")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Fire, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Fire, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Fire)));
 	}
@@ -2534,7 +2537,7 @@ rule("Icon 15")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Flag, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Flag, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Flag)));
 	}
@@ -2557,7 +2560,7 @@ rule("Icon 16")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Halo, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Halo, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Halo)));
 	}
@@ -2580,7 +2583,7 @@ rule("Icon 17")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Happy, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Happy, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Happy)));
 	}
@@ -2603,7 +2606,7 @@ rule("Icon 18")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Heart, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Heart, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Heart)));
 	}
@@ -2626,7 +2629,7 @@ rule("Icon 19")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Moon, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Moon, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Moon)));
 	}
@@ -2649,7 +2652,7 @@ rule("Icon 20")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, No, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, No, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(No)));
 	}
@@ -2672,7 +2675,7 @@ rule("Icon 21")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Plus, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Plus, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Plus)));
 	}
@@ -2695,7 +2698,7 @@ rule("Icon 22")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Poison, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Poison, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Poison)));
 	}
@@ -2718,7 +2721,7 @@ rule("Icon 23")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Poison 2, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Poison 2, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Poison 2)));
 	}
@@ -2741,7 +2744,7 @@ rule("Icon 24")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Question Mark, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Question Mark, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Question Mark)));
 	}
@@ -2764,7 +2767,7 @@ rule("Icon 25")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Radioactive, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Radioactive, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Radioactive)));
 	}
@@ -2787,7 +2790,7 @@ rule("Icon 26")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Recycle, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Recycle, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Recycle)));
 	}
@@ -2810,7 +2813,7 @@ rule("Icon 27")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Ring Thick, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Ring Thick, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Ring Thick)));
 	}
@@ -2833,7 +2836,7 @@ rule("Icon 28")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Ring Thin, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Ring Thin, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Ring Thin)));
 	}
@@ -2856,7 +2859,7 @@ rule("Icon 29")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Sad, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Sad, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Sad)));
 	}
@@ -2879,7 +2882,7 @@ rule("Icon 30")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Skull, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Skull, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Skull)));
 	}
@@ -2902,7 +2905,7 @@ rule("Icon 31")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Spade, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Spade, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Spade)));
 	}
@@ -2925,7 +2928,7 @@ rule("Icon 32")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Spiral, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Spiral, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Spiral)));
 	}
@@ -2948,7 +2951,7 @@ rule("Icon 33")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Stop, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Stop, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Stop)));
 	}
@@ -2971,7 +2974,7 @@ rule("Icon 34")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Trashcan, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Trashcan, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Trashcan)));
 	}
@@ -2994,7 +2997,7 @@ rule("Icon 35")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, Warning, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, Warning, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(Warning)));
 	}
@@ -3017,7 +3020,7 @@ rule("Icon 36")
 	actions
 	{
 		Destroy Icon(Event Player.ICON_ENTITY);
-		Create Icon(All Players(All Teams), Event Player, X, Visible To and Position, White, True);
+		Create Icon(All Players(All Teams), Event Player, X, Visible To and Position, Color(White), True);
 		Event Player.ICON_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("ICON: {0} {1}", Event Player.ICON_NUMBER, Icon String(X)));
 	}
@@ -3071,7 +3074,7 @@ rule("Aura 01")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, White, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+		Create Effect(All Players(All Teams), Sparkles, Color(White), Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
 			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} White", Event Player.AURA_NUMBER));
@@ -3095,7 +3098,7 @@ rule("Aura 02")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Yellow, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+		Create Effect(All Players(All Teams), Sparkles, Color(Yellow), Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
 			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Yellow", Event Player.AURA_NUMBER));
@@ -3119,7 +3122,7 @@ rule("Aura 03")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Green, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+		Create Effect(All Players(All Teams), Sparkles, Color(Green), Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
 			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Green", Event Player.AURA_NUMBER));
@@ -3143,7 +3146,7 @@ rule("Aura 04")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Purple, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+		Create Effect(All Players(All Teams), Sparkles, Color(Purple), Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
 			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Purple", Event Player.AURA_NUMBER));
@@ -3167,7 +3170,7 @@ rule("Aura 05")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Red, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+		Create Effect(All Players(All Teams), Sparkles, Color(Red), Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
 			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Red", Event Player.AURA_NUMBER));
@@ -3191,7 +3194,7 @@ rule("Aura 06")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Blue, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+		Create Effect(All Players(All Teams), Sparkles, Color(Blue), Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
 			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Blue", Event Player.AURA_NUMBER));
@@ -3215,7 +3218,7 @@ rule("Aura 07")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Aqua, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+		Create Effect(All Players(All Teams), Sparkles, Color(Aqua), Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
 			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Aqua", Event Player.AURA_NUMBER));
@@ -3239,7 +3242,7 @@ rule("Aura 08")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Orange, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
+		Create Effect(All Players(All Teams), Sparkles, Color(Orange), Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
 			Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Orange", Event Player.AURA_NUMBER));
@@ -3263,8 +3266,8 @@ rule("Aura 09")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Sky Blue, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
-			Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Sparkles, Color(Sky Blue), Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1)
+			/ 4, Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Sky Blue", Event Player.AURA_NUMBER));
 	}
@@ -3287,8 +3290,8 @@ rule("Aura 10")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Turquoise, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
-			Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Sparkles, Color(Turquoise), Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1)
+			/ 4, Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Turquoise", Event Player.AURA_NUMBER));
 	}
@@ -3311,10 +3314,298 @@ rule("Aura 11")
 	actions
 	{
 		Destroy Effect(Event Player.AURA_ENTITY);
-		Create Effect(All Players(All Teams), Sparkles, Lime Green, Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4,
-			Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Sparkles, Color(Lime Green), Event Player, Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1)
+			/ 4, Visible To Position and Radius);
 		Event Player.AURA_ENTITY = Last Created Entity;
 		Small Message(Event Player, Custom String("Aura: {0} Lime Green", Event Player.AURA_NUMBER));
+	}
+}
+
+rule("Aura 12: Ana Nano Boosted")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.AURA_NUMBER == 12;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.AURA_ENTITY);
+		Create Effect(All Players(All Teams), Ana Nano Boosted Effect, Color(Sky Blue), Event Player, Global.AURA_SIZE * (
+			Event Player.SCALE_SIZE + 1) / 4, Visible To Position and Radius);
+		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Ana Nano Boosted", Event Player.AURA_NUMBER));
+	}
+}
+
+rule("Aura 13: Baptiste Immortality")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.AURA_NUMBER == 13;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.AURA_ENTITY);
+		Create Effect(All Players(All Teams), Baptiste Immortality Field Protected Effect, Color(Turquoise), Event Player,
+			Global.AURA_SIZE * (Event Player.SCALE_SIZE + 1) / 4, Visible To Position and Radius);
+		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Baptiste Immortality", Event Player.AURA_NUMBER));
+	}
+}
+
+rule("Aura 14: Echo Cloning")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.AURA_NUMBER == 14;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.AURA_ENTITY);
+		Create Effect(All Players(All Teams), Echo Cloning Effect, Color(Orange), Event Player, Global.AURA_SIZE * (
+			Event Player.SCALE_SIZE + 1) / 4, Visible To Position and Radius);
+		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Echo Cloning", Event Player.AURA_NUMBER));
+	}
+}
+
+rule("Aura 15: Lucio Sound Barrier")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.AURA_NUMBER == 15;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.AURA_ENTITY);
+		Create Effect(All Players(All Teams), Lúcio Sound Barrier Protected Effect, Color(Lime Green), Event Player, Global.AURA_SIZE * (
+			Event Player.SCALE_SIZE + 1) / 4, Visible To Position and Radius);
+		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Lucio Sound Barrier", Event Player.AURA_NUMBER));
+	}
+}
+
+rule("Aura 16: Winston Primal Rage")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.AURA_NUMBER == 16;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.AURA_ENTITY);
+		Create Effect(All Players(All Teams), Winston Primal Rage Effect, Color(Orange), Event Player, Global.AURA_SIZE * (
+			Event Player.SCALE_SIZE + 1) / 4, Visible To Position and Radius);
+		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Winston Primal Rage", Event Player.AURA_NUMBER));
+	}
+}
+
+rule("Aura 17: Ana Sleeping")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.AURA_NUMBER == 17;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.AURA_ENTITY);
+		Create Effect(All Players(All Teams), Ana Sleeping Effect, Color(Sky Blue), Event Player, Global.AURA_SIZE * (
+			Event Player.SCALE_SIZE + 1) / 4, Visible To Position and Radius);
+		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Ana Sleeping", Event Player.AURA_NUMBER));
+	}
+}
+
+rule("Aura 18: Ashe Dynamite Burning Particle")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.AURA_NUMBER == 18;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.AURA_ENTITY);
+		Create Effect(All Players(All Teams), Ashe Dynamite Burning Particle Effect, Color(Orange), Event Player, Global.AURA_SIZE * (
+			Event Player.SCALE_SIZE + 1) / 4, Visible To Position and Radius);
+		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Ashe Dynamite Burning Particle", Event Player.AURA_NUMBER));
+	}
+}
+
+rule("Aura 19: McCree Flashbang Stunned")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.AURA_NUMBER == 19;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.AURA_ENTITY);
+		Create Effect(All Players(All Teams), McCree Flashbang Stunned Effect, Color(Turquoise), Event Player, Global.AURA_SIZE * (
+			Event Player.SCALE_SIZE + 1) / 4, Visible To Position and Radius);
+		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} McCree Flashbang Stunned", Event Player.AURA_NUMBER));
+	}
+}
+
+rule("Aura 20: Mei Frozen")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.AURA_NUMBER == 20;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.AURA_ENTITY);
+		Create Effect(All Players(All Teams), Mei Frozen Effect, Color(Lime Green), Event Player, Global.AURA_SIZE * (
+			Event Player.SCALE_SIZE + 1) / 4, Visible To Position and Radius);
+		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Mei Frozen", Event Player.AURA_NUMBER));
+	}
+}
+
+rule("Aura 21: Sigma Gravitic Flux Target")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.AURA_NUMBER == 21;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.AURA_ENTITY);
+		Create Effect(All Players(All Teams), Sigma Gravitic Flux Target Effect, Color(Sky Blue), Event Player, Global.AURA_SIZE * (
+			Event Player.SCALE_SIZE + 1) / 4, Visible To Position and Radius);
+		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Sigma Gravitic Flux Target", Event Player.AURA_NUMBER));
+	}
+}
+
+rule("Aura 22: Sombra Hacked Looping")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.AURA_NUMBER == 22;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.AURA_ENTITY);
+		Create Effect(All Players(All Teams), Sombra Hacked Looping Effect, Color(Turquoise), Event Player, Global.AURA_SIZE * (
+			Event Player.SCALE_SIZE + 1) / 4, Visible To Position and Radius);
+		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Sombra Hacked Looping", Event Player.AURA_NUMBER));
+	}
+}
+
+rule("Aura 23: Winston Tesla Cannon Target")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.AURA_NUMBER == 23;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.AURA_ENTITY);
+		Create Effect(All Players(All Teams), Winston Tesla Cannon Target Effect, Color(Lime Green), Event Player, Global.AURA_SIZE * (
+			Event Player.SCALE_SIZE + 1) / 4, Visible To Position and Radius);
+		Event Player.AURA_ENTITY = Last Created Entity;
+		Small Message(Event Player, Custom String("Aura: {0} Winston Tesla Cannon Target", Event Player.AURA_NUMBER));
 	}
 }
 
@@ -3337,7 +3628,7 @@ rule("Hug")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Is Communicating(Event Player, Thanks) == True;
 	}
 
@@ -3365,7 +3656,7 @@ rule("Wave")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Is Communicating(Event Player, Hello) == True;
 	}
 
@@ -3393,8 +3684,8 @@ rule("Bonks")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
-		Is Button Held(Event Player, Melee) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
+		Is Button Held(Event Player, Button(Melee)) == True;
 	}
 
 	actions
@@ -3580,7 +3871,7 @@ disabled rule("HUD Toggle")
 
 	conditions
 	{
-		Is Button Held(Event Player, Crouch) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
 		Is Communicating(Event Player, Need Healing) == True;
 	}
 
@@ -3609,89 +3900,89 @@ disabled rule("HUD Start")
 		Wait(0.001, Ignore Condition);
 		Event Player.DISPLAY_MENU = 0;
 		Create HUD Text(Event Player, Null, Null, Custom String("Relax v{0} is a script for chill server by AYESDIE#1904", Custom String(
-			"1.4")), Right, 0, White, Purple, Purple, Visible To and String, Default Visibility);
+			"1.4")), Right, 0, Color(White), Color(Purple), Color(Purple), Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
 		Create HUD Text(Event Player, Null, Null, Custom String("Join the discord server: {0}", Custom String("discord.gg/NXHN5GG")),
-			Right, 0.100, White, Purple, Purple, Visible To and String, Default Visibility);
+			Right, 0.100, Color(White), Color(Purple), Color(Purple), Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Custom String("Chill: Crouch + Emote"), Right, 1, White, Blue, Blue,
+		Create HUD Text(Event Player, Null, Null, Custom String("Chill: Crouch + Emote"), Right, 1, Color(White), Color(Blue), Color(Blue),
 			Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Teleport: Interact"), Null, Right, 2, White, Green, Green,
+		Create HUD Text(Event Player, Null, Custom String("Teleport: Interact"), Null, Right, 2, Color(White), Color(Green), Color(Green),
 			Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Hero Swap: Look Down + Jump + Crouch"), Null, Right, 3, White, Lime Green,
-			Lime Green, Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Hero Swap: Look Down + Jump + Crouch"), Null, Right, 3, Color(White), Color(
+			Lime Green), Color(Lime Green), Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Sleep: Ultimate Status (Toggle), Crouch (Disable)"), Null, Right, 4, White,
-			Orange, Orange, Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Sleep: Ultimate Status (Toggle), Crouch (Disable)"), Null, Right, 4, Color(
+			White), Color(Orange), Color(Orange), Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Fly: Ability 1 (Hold) + Jump"), Null, Right, 5, White, Team 2, Orange,
-			Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Fly: Ability 1 (Hold) + Jump"), Null, Right, 5, Color(White), Color(Team 2),
+			Color(Orange), Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Invisible: Crouch + Group Up"), Null, Right, 6, White, Yellow, Yellow,
-			Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Invisible: Crouch + Group Up"), Null, Right, 6, Color(White), Color(Yellow),
+			Color(Yellow), Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Camera: Crouch (Hold) + Ability 1"), Null, Right, 7, White, Aqua, Aqua,
-			Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Camera: Crouch (Hold) + Ability 1"), Null, Right, 7, Color(White), Color(Aqua),
+			Color(Aqua), Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Icon: Crouch + Voiceline (Left/Right to Cycle)"), Null, Right, 8, White, White,
-			White, Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Icon: Crouch + Voiceline (Left/Right to Cycle)"), Null, Right, 8, Color(White),
+			Color(White), Color(White), Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
 		Create HUD Text(Event Player, Null, Custom String("Disable Icon: Look Down + Crouch + Voiceline (Left/Right)"), Null, Right, 9,
-			White, White, White, Visible To and String, Default Visibility);
+			Color(White), Color(White), Color(White), Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Aura: Crouch + Voiceline (Up/Down to Cycle)"), Null, Right, 10, White, White,
-			White, Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Aura: Crouch + Voiceline (Up/Down to Cycle)"), Null, Right, 10, Color(White),
+			Color(White), Color(White), Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
 		Create HUD Text(Event Player, Null, Custom String("Disable Aura: Look Down + Crouch + Voiceline (Up/Down)"), Null, Right, 11,
-			White, White, White, Visible To and String, Default Visibility);
+			Color(White), Color(White), Color(White), Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("HUD: Crouch + Need Healing"), Null, Right, 12, White, Red, Red,
-			Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("HUD: Crouch + Need Healing"), Null, Right, 12, Color(White), Color(Red), Color(
+			Red), Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Custom String("Host: {0}", Host Player), Left, 0, White, Purple, Purple,
-			Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, Null, Null, Custom String("Host: {0}", Host Player), Left, 0, Color(White), Color(Purple), Color(
+			Purple), Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
 		Skip If(Event Player != Host Player || !Global.CUSTOM_BOT_ENABLE, 4);
-		Create HUD Text(Event Player, Null, Custom String("Spawn Bot: Ultimate + Group Up"), Null, Right, 13, White, Red, Red,
-			Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Spawn Bot: Ultimate + Group Up"), Null, Right, 13, Color(White), Color(Red),
+			Color(Red), Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
 		Skip If(Event Player != Host Player || !Global.SLO_MO_ENABLE, 4);
-		Create HUD Text(Event Player, Null, Custom String("Slo Mo: Crouch + Ultimate + Acknowledge"), Null, Right, 14, White, Red, Red,
-			Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Slo Mo: Crouch + Ultimate + Acknowledge"), Null, Right, 14, Color(White), Color(
+			Red), Color(Red), Visible To and String, Default Visibility);
 		Event Player.HUD_ARRAY[Event Player.DISPLAY_MENU] = Last Text ID;
 		Event Player.DISPLAY_MENU = Event Player.DISPLAY_MENU + 1;
 		Wait(0.001, Ignore Condition);
@@ -3745,55 +4036,55 @@ disabled rule("New MENU Start")
 	{
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Null, Custom String("A script for chill server by AYESDIE#1904", Global.VERSION), Right, 0.250,
-			White, White, Purple, None, Default Visibility);
+			Color(White), Color(White), Color(Purple), None, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Null, Custom String("Join the Discord server: discord.gg/NXHN5GG", Global.VERSION), Right,
-			0.500, White, White, Purple, None, Default Visibility);
+			0.500, Color(White), Color(White), Color(Purple), None, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Teleport: Interact"), Null, Right, 2, White, Blue, White, None,
-			Default Visibility);
-		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
-		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Hero Swap: Look Down + Jump + Crouch"), Null, Right, 3, White, Sky Blue, White,
+		Create HUD Text(Event Player, Null, Custom String("Teleport: Interact"), Null, Right, 2, Color(White), Color(Blue), Color(White),
 			None, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Sleep: Ultimate Status (TOGGLE); Crouch (Disable)"), Null, Right, 4, White,
-			Sky Blue, White, None, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Hero Swap: Look Down + Jump + Crouch"), Null, Right, 3, Color(White), Color(
+			Sky Blue), Color(White), None, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Fly: Ability 1 + Jump"), Null, Right, 5, White, Green, White, None,
-			Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Sleep: Ultimate Status (TOGGLE); Crouch (Disable)"), Null, Right, 4, Color(
+			White), Color(Sky Blue), Color(White), None, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Invisible: Crouch + Group Up"), Null, Right, 6, White, Green, White, None,
-			Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Fly: Ability 1 + Jump"), Null, Right, 5, Color(White), Color(Green), Color(
+			White), None, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Camera: Ability 1 + Crouch"), Null, Right, 7, White, Turquoise, White, None,
-			Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Invisible: Crouch + Group Up"), Null, Right, 6, Color(White), Color(Green),
+			Color(White), None, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Icon: Crouch + Voiceline (Left/Right to Cycle)"), Null, Right, 8, White,
-			Turquoise, White, None, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Camera: Ability 1 + Crouch"), Null, Right, 7, Color(White), Color(Turquoise),
+			Color(White), None, Default Visibility);
+		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
+		Wait(0.010, Ignore Condition);
+		Create HUD Text(Event Player, Null, Custom String("Icon: Crouch + Voiceline (Left/Right to Cycle)"), Null, Right, 8, Color(White),
+			Color(Turquoise), Color(White), None, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Custom String("Disable Icon: Look Down + Crouch + Voiceline (Left/Right)"), Null, Right, 9,
-			White, Lime Green, White, None, Default Visibility);
+			Color(White), Color(Lime Green), Color(White), None, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Aura: Crouch + Voiceline (Up/Down to Cycle)"), Null, Right, 10, White,
-			Lime Green, White, None, Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Aura: Crouch + Voiceline (Up/Down to Cycle)"), Null, Right, 10, Color(White),
+			Color(Lime Green), Color(White), None, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Custom String("Disable Aura: Look Down + Crouch + Voiceline (Up/Down)"), Null, Right, 11,
-			White, Turquoise, White, None, Default Visibility);
+			Color(White), Color(Turquoise), Color(White), None, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("HUD: Crouch + Need Healing"), Null, Right, 12, White, Turquoise, White, None,
-			Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("HUD: Crouch + Need Healing"), Null, Right, 12, Color(White), Color(Turquoise),
+			Color(White), None, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
 		Event Player.MENU_ARRAY = Icon String(Arrow: Up);
 	}
@@ -3811,28 +4102,28 @@ disabled rule("New HUD Start")
 	actions
 	{
 		Wait(0.250, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Custom String("Relax v{0}", Global.VERSION), Left, 0, White, White, White, None,
-			Default Visibility);
+		Create HUD Text(Event Player, Null, Null, Custom String("Relax v{0}", Global.VERSION), Left, 0, Color(White), Color(White), Color(
+			White), None, Default Visibility);
 		disabled Modify Player Variable(Event Player, HUD_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Null, Custom String("A script for chill server by AYESDIE#1904", Global.VERSION), Left, 0.250,
-			White, White, Purple, None, Default Visibility);
+			Color(White), Color(White), Color(Purple), None, Default Visibility);
 		Wait(0.010, Ignore Condition);
 		Create HUD Text(Event Player, Null, Null, Custom String("Join the Discord server: discord.gg/NXHN5GG", Global.VERSION), Left,
-			0.500, White, White, Purple, None, Default Visibility);
+			0.500, Color(White), Color(White), Color(Purple), None, Default Visibility);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Null, Custom String("CHILL: Crouch + Emote", Global.VERSION), Left, 1, White, White, Blue,
-			None, Default Visibility);
+		Create HUD Text(Event Player, Null, Null, Custom String("CHILL: Crouch + Emote", Global.VERSION), Left, 1, Color(White), Color(
+			White), Color(Blue), None, Default Visibility);
 		disabled Modify Player Variable(Event Player, HUD_ARRAY, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
-		Create HUD Text(Event Player, Null, Custom String("Expand Menu: Crouch + Need Healing"), Null, Left, 12, White, White, White, None,
-			Default Visibility);
+		Create HUD Text(Event Player, Null, Custom String("Expand Menu: Crouch + Need Healing"), Null, Left, 12, Color(White), Color(
+			White), Color(White), None, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
 		Wait(0.010, Ignore Condition);
 		Event Player.MENU_ARRAY = Icon String(Arrow: Down);
 		Create HUD Text(Event Player, Null, Null, Custom String(
-			"----------------------------------- {0} -----------------------------------", Event Player.MENU_ARRAY), Right, 13, White,
-			White, White, String, Default Visibility);
+			"----------------------------------- {0} -----------------------------------", Event Player.MENU_ARRAY), Right, 13, Color(
+			White), Color(White), Color(White), String, Default Visibility);
 		Modify Player Variable(Event Player, DISPLAY_MENU, Append To Array, Last Text ID);
 	}
 }
@@ -3850,7 +4141,7 @@ disabled rule("Ability HUD")
 	{
 		Create HUD Text(Event Player, Null, Null, Custom String("Ability 1: {0} Ability 2: {1} RMB: {2}", Ability Cooldown(Event Player,
 			Button(Ability 1)), Ability Cooldown(Event Player, Button(Ability 2)), Ability Cooldown(Event Player, Button(Secondary Fire))),
-			Top, 0, White, White, White, Visible To and String, Default Visibility);
+			Top, 0, Color(White), Color(White), Color(White), Visible To and String, Default Visibility);
 		disabled Set Ability Cooldown(Event Player, Button(Primary Fire), 0);
 	}
 }
