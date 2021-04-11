@@ -3635,7 +3635,7 @@ rule("Hug")
 	actions
 	{
 		Event Player.HUGGED = Player Closest To Reticle(Event Player, All Teams);
-		Skip If(Distance Between(Position Of(Event Player), Position Of(Event Player.HUGGED)) > 5, 1);
+		Skip If(Event Player.HUGGED == 0 || Distance Between(Position Of(Event Player), Position Of(Event Player.HUGGED)) > 5, 1);
 		Small Message(All Players(All Teams), Custom String("{0} {2} {1} ", Custom String("{1} {0}", Event Player, Hero Icon String(
 			Hero Of(Event Player))), Custom String("{0} {1} ", Event Player.HUGGED, Hero Icon String(Hero Of(Event Player.HUGGED))),
 			Random Value In Array(Global.HUGS)));
@@ -3663,7 +3663,7 @@ rule("Wave")
 	actions
 	{
 		Event Player.WAVED = Player Closest To Reticle(Event Player, All Teams);
-		Skip If(Distance Between(Position Of(Event Player), Position Of(Event Player.WAVED)) > 5, 1);
+		Skip If(Event Player.WAVED == 0 || Distance Between(Position Of(Event Player), Position Of(Event Player.WAVED)) > 5, 1);
 		Small Message(All Players(All Teams), Custom String("{0} {2} {1} ", Custom String("{1} {0}", Event Player, Hero Icon String(
 			Hero Of(Event Player))), Custom String("{0} {1} ", Event Player.WAVED, Hero Icon String(Hero Of(Event Player.WAVED))),
 			Random Value In Array(Global.GREETS)));
@@ -3691,7 +3691,7 @@ rule("Bonks")
 	actions
 	{
 		Event Player.BONKED = Player Closest To Reticle(Event Player, All Teams);
-		Skip If(Distance Between(Position Of(Event Player), Position Of(Event Player.BONKED)) > 5, 1);
+		Skip If(Event Player.BONKED == 0 || Distance Between(Position Of(Event Player), Position Of(Event Player.BONKED)) > 5, 1);
 		Small Message(All Players(All Teams), Custom String("{0} {2} {1} ", Custom String("{1} {0}", Event Player, Hero Icon String(
 			Hero Of(Event Player))), Custom String("{0} {1} ", Event Player.BONKED, Hero Icon String(Hero Of(Event Player.BONKED))),
 			Random Value In Array(Global.BONKS)));
