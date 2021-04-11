@@ -120,6 +120,12 @@ rule("init")
 		Modify Global Variable(HUGS, Append To Array, Custom String("(.づσ σ)づ."));
 		Modify Global Variable(HUGS, Append To Array, Custom String("ヾ(￣ー￣(^ω^*)ゝ"));
 		Modify Global Variable(HUGS, Append To Array, Custom String("（づ￣3￣）づ"));
+		Modify Global Variable(HUGS, Append To Array, Custom String("( T_T)＼(^-^ )"));
+		Modify Global Variable(HUGS, Append To Array, Custom String("(･–･) \\(･w･)/"));
+		Modify Global Variable(HUGS, Append To Array, Custom String("ヾ(˙o˙)ﾉ"));
+		Modify Global Variable(HUGS, Append To Array, Custom String("～(つ 0 Д 0 )つ｡☆"));
+		Modify Global Variable(HUGS, Append To Array, Custom String("(･ω･)つ⊂(･ω･)"));
+		Modify Global Variable(HUGS, Append To Array, Custom String("(つ (-) ▽ (-) )つ"));
 		Global.GREETS = Custom String("(*・ω・)ﾉ");
 		Modify Global Variable(GREETS, Append To Array, Custom String("【*• ‿ •*】Hi!"));
 		Modify Global Variable(GREETS, Append To Array, Custom String("(⌒ω⌒)ﾉ"));
@@ -127,6 +133,13 @@ rule("init")
 		Modify Global Variable(GREETS, Append To Array, Custom String("ヾ(・Θ・)ノ〃"));
 		Modify Global Variable(GREETS, Append To Array, Custom String("ヾ(•ω•`)o"));
 		Modify Global Variable(GREETS, Append To Array, Custom String("(人^▽') ～♡"));
+		Modify Global Variable(GREETS, Append To Array, Custom String("(-‿・)—☆"));
+		Modify Global Variable(GREETS, Append To Array, Custom String("(♥^‿^)"));
+		Modify Global Variable(GREETS, Append To Array, Custom String("( >‿< )♡"));
+		Modify Global Variable(GREETS, Append To Array, Custom String("(￣(ｴ)￣)ﾉ"));
+		Modify Global Variable(GREETS, Append To Array, Custom String("(ノ^_^)ノ"));
+		Modify Global Variable(GREETS, Append To Array, Custom String("(・–・;)ゞ"));
+		Modify Global Variable(GREETS, Append To Array, Custom String("*･゜ﾟ(^O^)/"));
 		Global.BONKS = Custom String("<( ‵□′)───C＜─___-)||");
 		Modify Global Variable(BONKS, Append To Array, Custom String("(ｏ ‵-′)ノ”(ノ﹏<。)"));
 		Modify Global Variable(BONKS, Append To Array, Custom String("<( ‵□′)>───Ｃε(┬﹏┬)3"));
