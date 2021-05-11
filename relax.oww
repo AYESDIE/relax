@@ -111,7 +111,7 @@ rule("init")
 		Global.SLO_MO_REQUEST = False;
 		Global.SLO_MO_LOBBY_COUNT = 0;
 		Global.SLO_MO_COUNT_VOTE = False;
-		Global.VERSION = Custom String("(Master; Unstable; Base: v1.5.2)");
+		Global.VERSION = Custom String("1.5.3 (Unstable)");
 		Global.HUGS = Custom String("(っ´▽｀)っ");
 		Modify Global Variable(HUGS, Append To Array, Custom String("（っ・∀・）っ"));
 		Modify Global Variable(HUGS, Append To Array, Custom String("(> ^_^ )>"));
